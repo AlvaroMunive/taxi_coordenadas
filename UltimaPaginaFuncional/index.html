@@ -48,6 +48,10 @@
   <script>
     const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
     const marker = L.marker([0, 0]).addTo(mymap)
+    var polyline =L.polyline([["0","0"],["-10","-71"]], {color: "red"}).addTo(mymap)
+    var contador =0
+    let latlon= Array(0)
+    
 
     const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -59,12 +63,14 @@
       const response = await fetch('lastData.txt')
       const data = await response.json();
       const { lat, lon, tim } = data;
-      console.log(data);
-      marker.setLatLng([lat, lon]);
+      latlon.push([lat,lon])
+      
+      polyline.setLatLngs([latlon])
+      marker.setLatLng([lat, lon]).bindPopup("["+lat+", "+lon+"]").openPopup;
       document.getElementById("lat").textContent = lat;
       document.getElementById("long").textContent = lon;
       document.getElementById("tim").textContent = tim;
-
+      contador=contador+1
 
 
     }
