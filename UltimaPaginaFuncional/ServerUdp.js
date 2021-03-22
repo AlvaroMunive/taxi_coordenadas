@@ -52,19 +52,9 @@ setInterval(function(){
 },1000);
 
 
-
-socket.on('listening', () => {
-  const address = server.address();
-  console.log(`server listening ${address.address}:${address.port}`);
-});
-
-
-
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
-
-
 
 
 socket.bind(3020);
