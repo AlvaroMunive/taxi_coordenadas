@@ -1,24 +1,18 @@
-var socketio = require('socket.io');
+
 var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
 var path = require('path');
-var bodyParser = require('body-parser');
 const fs = require("fs")
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
 app.use(express.static(__dirname));
+
 var data
 var longitud
 var time
 var latitud
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "gps_coordenadas"
-// });
 
 
 
@@ -74,6 +68,6 @@ app.get('/', (request, response) => {
 
 
 socket.bind(3020);
-server.listen(15002, () => {
-  console.log('Servidor abierto en puerto 15002');
+server.listen(80, () => {
+  console.log('Servidor abierto en puerto 80');
 });

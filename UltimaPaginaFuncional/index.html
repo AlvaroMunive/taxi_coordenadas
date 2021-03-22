@@ -1,83 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<html class="no-js" lang="en">
-    <head>
-  
-      <meta charset="utf-8" />
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Taxi1_Coordenadas</title>
-      <link rel = "icon" href = "https://img.icons8.com/emoji/48/000000/oncoming-taxi.png" type = "image / icon type">
-      <link rel="stylesheet" href="css/foundation.css" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""></script>
-  
-    </head>
-    <body>
-      <br>
-      <table id="tabla1">
-          <tr>
-            <td>Longitud</td>
-            <td>Latitud</td>
-            <td>Tiempo</td>
-          </tr>
-  
-        <tr>
-          <td><span id="lat" ></span></td>
-          <td><span id="long" ></span></td>
-          <td><span id="tim" ></span></td>
-        </tr>
-  
-  
-      </table>
-  
-      <style media="screen">
-      #mapid {
-        height: 500px;
-        width: 100%;
-      }
-      </style>
-  
-    <div id="mapid"></div>
-  
-     <script>
-     const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
-     const marker =L.marker([0, 0]).addTo(mymap)
-  
-     const attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-     const tileUrl= 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-     const tiles= L.tileLayer(tileUrl,{attribution});
-     tiles.addTo(mymap);
-  
-    async function Taxi(){
-  
-      const response =await fetch('lastData.txt')
-      const data= await response.json();
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi1_Coordenadas</title>
+  <link rel="icon" href="https://img.icons8.com/emoji/48/000000/oncoming-taxi.png" type="image / icon type">
+  <!--Lealflet-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+
+</head>
+
+<body>
+
+  <table>
+
+    <tr>
+      <td>Longitud</td>
+      <td>Latitud</td>
+      <td>Tiempo</td>
+    </tr>
+
+    <tr>
+      <td><span id="lat"></span></td>
+      <td><span id="long"></span></td>
+      <td><span id="tim"></span></td>
+    </tr>
+
+  </table>
+
+  <div id="mapid"></div>
+  <style media="screen">
+    #mapid {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+
+  <!--Lealflet settings-->
+  <script>
+    const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
+    const marker = L.marker([0, 0]).addTo(mymap)
+
+    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tiles = L.tileLayer(tileUrl, { attribution });
+    tiles.addTo(mymap);
+
+    async function Taxi() {
+
+      const response = await fetch('lastData.txt')
+      const data = await response.json();
       const { lat, lon, tim } = data;
       console.log(data);
-      marker.setLatLng([lat,lon]);
-    document.getElementById("lat").textContent=lat;
-    document.getElementById("long").textContent=lon;
-    document.getElementById("tim").textContent=tim;
-  
-  
-  
+      marker.setLatLng([lat, lon]);
+      document.getElementById("lat").textContent = lat;
+      document.getElementById("long").textContent = lon;
+      document.getElementById("tim").textContent = tim;
+
+
+
     }
-  setInterval('Taxi()',3000);
-  window.addEventListener("load",Taxi);
-     </script>
-  
-      <script src="js/vendor/jquery.js"></script>
-      <script src="js/vendor/what-input.js"></script>
-      <script src="js/vendor/foundation.min.js"></script>
-      <script src='/UninorteProyecto/socket.js'></script>
-  
-  
-    </body>
-  
-  </html>
-  
+    setInterval('Taxi()', 3000);
+    window.addEventListener("load", Taxi);
+  </script>
+
+</body>
+
+</html>
