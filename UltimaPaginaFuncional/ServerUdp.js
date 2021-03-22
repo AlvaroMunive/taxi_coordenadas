@@ -3,7 +3,8 @@ var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
 var path = require('path');
-const fs = require("fs")
+const fs = require("fs");
+const {Pool} = require('pg');
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
@@ -14,6 +15,12 @@ var longitud
 var time
 var latitud
 
+const pool = new Pool({
+  user: 'posgrest',
+  host: 'localhost',
+  password:'',
+  database: 'coordenadas'
+});
 
 
 socket.on('error', (err) => {
@@ -34,7 +41,10 @@ socket.on('message', (msg, rinfo) => {
     
     time=data[2]
     
-    
+   const inserCoord = async() =>{
+     const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES("longitud", "latitud", "tiempo")';
+     const res = await pool.query(text);
+   }
 
 
 });
