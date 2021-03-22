@@ -15,7 +15,7 @@ var time
 var latitud
 
 const pool = new Pool({
-  user: 'posgrest',
+  user: 'postgres',
   host: 'localhost',
   password:'',
   database: 'coordenadas'
@@ -39,7 +39,10 @@ socket.on('message', (msg, rinfo) => {
     
     time=data[2]
     
-   
+    const inserCoord = async() =>{
+      const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
+      const res = await pool.query(text);
+    }
 });
 
 setInterval(function(){
@@ -53,10 +56,7 @@ setInterval(function(){
      if (err) throw err;
  });
 
- const inserCoord = async() =>{
-  const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
-  const res = await pool.query(text);
-}
+ 
 },1000);
 
 
