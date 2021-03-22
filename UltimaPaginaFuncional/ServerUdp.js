@@ -3,7 +3,7 @@ const dgram = require('dgram');
 var mysql = require('mysql');
 var path = require('path');
 const fs = require("fs");
-const {Pool} = require('pg');
+const {Client} = require('pg');
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
@@ -14,13 +14,23 @@ var longitud
 var time
 var latitud
 
-const pool = new Pool({
+const connectionData ={
   user: 'postgres',
-  host: 'localhost',
+  host: '',
   password:'',
   database: 'coordenadas'
-});
-pool.connect();
+};
+const client = new Client(connectionData)
+client.connect()
+client.query('SELECT * FROM table')
+    .then(response => {
+        console.log(response.rows)
+        client.end()
+    })
+    .catch(err => {
+        client.end()
+    })
+
 socket.on('error', (err) => {
   console.log(`server error:\n${err.stack}`);
   socket.close();
