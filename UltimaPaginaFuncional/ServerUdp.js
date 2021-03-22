@@ -40,7 +40,7 @@ socket.on('message', (msg, rinfo) => {
     time=data[2]
     
     const inserCoord = async() =>{
-      const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
+      const text = 'INSERT INTO  coordenadas(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
       const res = await pool.query(text);
     }
 });
