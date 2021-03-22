@@ -1,4 +1,3 @@
-
 var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
@@ -21,8 +20,7 @@ const pool = new Pool({
   password:'',
   database: 'coordenadas'
 });
-
-
+pool.connect();
 socket.on('error', (err) => {
   console.log(`server error:\n${err.stack}`);
   socket.close();
