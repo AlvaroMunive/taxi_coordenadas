@@ -39,12 +39,7 @@ socket.on('message', (msg, rinfo) => {
     
     time=data[2]
     
-   const inserCoord = async() =>{
-     const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES("longitud", "latitud", "tiempo")';
-     const res = await pool.query(text);
-   }
-
-
+   
 });
 
 setInterval(function(){
@@ -57,6 +52,11 @@ setInterval(function(){
    fs.writeFile("lastData.txt",data,function (err) {
      if (err) throw err;
  });
+
+ const inserCoord = async() =>{
+  const text = 'INSERT INTO  users(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
+  const res = await pool.query(text);
+}
 },1000);
 
 
