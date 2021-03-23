@@ -1,4 +1,4 @@
-
+require('events').EventEmitter.prototype._maxListeners = 0;
 var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
@@ -7,7 +7,16 @@ const fs = require("fs")
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
+const {pool,Client}= require("pg")
+const connectionString="postgressql://Alvaro:azereje12@serverbase.cigz349a2wix.us-east-2.rds.amazonaws.com:5432/serverbase0"
 app.use(express.static(__dirname));
+
+const client = new Client({
+  connectionString:connectionString
+})
+
+client.connect()
+
 
 var data
 var longitud
@@ -33,6 +42,13 @@ socket.on('message', (msg, rinfo) => {
     latitud= data[1];
     
     time=data[2]
+
+
+    client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
+    console.log(err,res);
+  
+    })
+  
     
     
 
