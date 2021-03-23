@@ -1,35 +1,31 @@
+require('events').EventEmitter.prototype._maxListeners = 0;
 var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
 var path = require('path');
-const fs = require("fs");
-const {Client} = require('pg');
+const fs = require("fs")
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
 app.use(express.static(__dirname));
+// Module postgresql
+const {pool,Client}= require("pg")
+// Parametros para para la conexion con postgresql
+const connectionString="postgressql://Brayan:tiotaxi22@basededatostaxi.csgckedzjvw7.us-east-2.rds.amazonaws.com:5432/taxi_coordenadas"
+// Entanblar conexion con postgresql
+const client = new Client({
+  connectionString:connectionString
+})
+
+client.connect()
+
 
 var data
 var longitud
 var time
 var latitud
 
-const connectionData ={
-  user: 'postgres',
-  host: '',
-  password:'',
-  database: 'coordenadas'
-};
-const client = new Client(connectionData)
-client.connect()
-client.query('SELECT * FROM table')
-    .then(response => {
-        console.log(response.rows)
-        client.end()
-    })
-    .catch(err => {
-        client.end()
-    })
+
 
 socket.on('error', (err) => {
   console.log(`server error:\n${err.stack}`);
@@ -48,11 +44,17 @@ socket.on('message', (msg, rinfo) => {
     latitud= data[1];
     
     time=data[2]
+
+// Insertar dato entrante a la base de datos
+    client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
+    console.log(err,res);
+  
+    })
+  
     
-    const inserCoord = async() =>{
-      const text = 'INSERT INTO  coordenadas(longitud, latitud, tiempo) VALUES(longitud, latitud, tiempo)';
-      const res = await pool.query(text);
-    }
+    
+
+
 });
 
 setInterval(function(){
@@ -65,8 +67,6 @@ setInterval(function(){
    fs.writeFile("lastData.txt",data,function (err) {
      if (err) throw err;
  });
-
- 
 },1000);
 
 
