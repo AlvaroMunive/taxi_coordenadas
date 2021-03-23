@@ -3,24 +3,22 @@ var express = require('express');
 const dgram = require('dgram');
 var mysql = require('mysql');
 var path = require('path');
-const fs = require("fs");
+const fs = require("fs")
 var app = express();
 var server = require('http').Server(app);
 const socket = dgram.createSocket('udp4');
 app.use(express.static(__dirname));
-
-// Modulo postgresql
+// Module postgresql
 const {pool,Client}= require("pg")
-
-// Conexión con postgressql
-const connectionString='postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com:5432/DatosTaxi'
-
-// Se conecta con postgressql
+// Parametros para para la conexion con postgresql
+const connectionString="'postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com/DatosTaxi"
+// Entanblar conexion con postgresql
 const client = new Client({
   connectionString:connectionString
 })
 
 client.connect()
+
 
 var data
 var longitud
@@ -46,12 +44,16 @@ socket.on('message', (msg, rinfo) => {
     latitud= data[1];
     
     time=data[2]
-    
-    // Insertar datos de entrada a la basa de datos
-    client.query('INSERT INTO public.Taxis_coordenadas("Latitud", "Longitud", "Tiempo") VALUES ('+latitud+','+longitud+','+time+');',(err,res)=>{
+
+// Insertar dato entrante a la base de datos
+    client.query('INSERT INTO public.Taxi_coordenadas("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
     console.log(err,res);
+  
     })
+  
     
+    
+
 
 });
 
