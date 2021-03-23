@@ -10,13 +10,13 @@ const socket = dgram.createSocket('udp4');
 app.use(express.static(__dirname));
 
 // Modulo postgresql
-const {pool,client}= require("pg")
+const {pool,Client}= require("pg")
 
 // Conexión con postgressql
 const connectionString='postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com:5432/DatosTaxi'
 
 // Se conecta con postgressql
-const client= new client({
+const client = new Client({
   connectionString:connectionString
 })
 
