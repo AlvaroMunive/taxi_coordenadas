@@ -11,7 +11,7 @@ app.use(express.static(__dirname));
 // Module postgresql
 const {pool,Client}= require("pg")
 // Parametros para para la conexion con postgresql
-const connectionString="'postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com/DatosTaxi"
+const connectionString="postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com:5432/DatosTaxi"
 // Entanblar conexion con postgresql
 const client = new Client({
   connectionString:connectionString
@@ -46,7 +46,7 @@ socket.on('message', (msg, rinfo) => {
     time=data[2]
 
 // Insertar dato entrante a la base de datos
-    client.query('INSERT INTO public.Taxi_coordenadas("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
+    client.query('INSERT INTO public.taxi("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
     console.log(err,res);
   
     })
