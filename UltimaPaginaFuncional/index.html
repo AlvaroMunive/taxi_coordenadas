@@ -51,7 +51,7 @@
     var polyline =L.polyline([["0","0"]], {color: "red"}).addTo(mymap)
     var contador =0
     let latlon= Array(0)
-    
+
 
     const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -64,7 +64,7 @@
       const data = await response.json();
       const { lat, lon, tim } = data;
       latlon.push([lat,lon])
-      
+
       polyline.setLatLngs([latlon])
       marker.setLatLng([lat, lon]).bindPopup("["+lat+", "+lon+"]").openPopup;
       document.getElementById("lat").textContent = lat;
