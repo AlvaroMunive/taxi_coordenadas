@@ -46,7 +46,7 @@ socket.on('message', (msg, rinfo) => {
     time=data[2]
 
 // Insertar dato entrante a la base de datos
-    client.query('INSERT INTO public.Taxi_coordenadas("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
+    client.query('INSERT INTO public.Taxi("Latitud", "Longitud", "Time")VALUES ('+latitud+','+longitud+','+time+');', (err,res)=>{
     console.log(err,res);
   
     })
