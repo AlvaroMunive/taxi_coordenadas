@@ -43,6 +43,9 @@
       width: 100%;
     }
   </style>
+  
+  <button onclick="bottonFunction()">Localizar marcador</button>
+
 
   <!--Lealflet settings-->
   <script>
@@ -74,6 +77,15 @@
 
 
     }
+
+    async function bottonFunction(){
+        const response =await fetch('lastData.txt')
+        const data = await response.json();
+        const {lat,lon,tim}=data;
+        mymap.setView([lat,lon]);
+    } 
+
+
     setInterval('Taxi()', 3000);
     window.addEventListener("load", Taxi);
   </script>
