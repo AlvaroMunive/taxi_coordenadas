@@ -16,6 +16,8 @@ header{
     
 }
 
+
+
 #gorro{
    
     text-align: center;
@@ -26,14 +28,6 @@ header{
 table{
     border-bottom: 3px dashed black;
     font-size: 20px;
-}
-
-button{
-    float: right;
-    color:black;
-    font-size: 20px;
-    font-weight: bold;
-    
 }
 
 footer{
@@ -50,3 +44,88 @@ footer{
     width: 100%;
   }
 
+.historial{
+    float: right;
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    height: 22px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+.historial:hover{
+    color: black;
+    background-color: #ffee00;
+  }
+.localizar{
+    float: right;
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    height: 22px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+.localizar:hover{
+    color: black;
+    background-color: #ffee00;
+  }
+
+.Enviar{
+    float: right;
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    height: 19px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+.Enviar:hover{
+    color: black;
+    background-color: #ffee00;
+  }
+
+.index{
+    float: right;
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    height: 19px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+.index:hover{
+    color: black;
+    background-color: #ffee00;
+  }
+
+label{
+      font-size: 20px;
+      line-height: 110%;
+  }
+#start{
+   
+    background-color: #ffee00;
+    color: black; 
+    border-color: black;
+    border-radius: 5px;
+ }
+#end{
+   
+    background-color: #ffee00;
+    color: black; 
+    border-color: black;
+    border-radius: 5px;
+ }
