@@ -73,6 +73,9 @@ setInterval(function(){
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
+app.get('/ubicar', (request, response) => {
+  response.sendFile(path.join(__dirname + '/ubicar.html'));
+});
 
 
 socket.bind(3020);
