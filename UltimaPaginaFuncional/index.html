@@ -65,6 +65,8 @@
   const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
   var customIcon = new L.Icon({
   iconUrl: 'taxipeq.png',
+  iconSize: [38,95],
+  iconAnchor: [22,94],
   popupAnchor: [0,0]
   });
   const marker = L.marker([0, 0],{icon:customIcon}).addTo(mymap)
