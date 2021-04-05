@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tio Taxis</title>
+  <link rel="icon" href="taxi.png" type="image / icon type">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="Estilos.css" />
+  <script>
+    function Enviar(){
+      fecha_ini = document.getElementById('startd');
+      fecha_fin = document.getElementById('endd');
+      //TODO 
+      //var DatosPoly = "SELECT * FROM taxi_coordenadas WHERE Time BETWEEN '+fecha_ini' AND '+fecha_fin'";
+      console.log(fecha_fin);
+
+    }
+  </script>
+</head>
+
+<body>
+    <div id="container">
+        <header id="gorro">
+          <img src = "gorrotaxi.png" />
+        </header>
+        <header>
+          <h1>El Tio Taxis
+          <img src="taxi.png"/>
+          </h1>
+        </header>
+        
+        <label for="start">Start date:</label>   
+        <input type="date" id="startd" name="start"> <input type="time" id="starth" name="start">
+        <br>
+        <label for="end">End date: </label>
+        <input type="date" id="endd" name="start"> <input type="time" id="endh" name="start">
+        <a class="Enviar" onclick="Enviar()">Consultar</a>
+        <a class= "index" href="index.html">Volver a pagina de inicio</a>
+        <br>
+        <br>
+        
+    <div id="mapid"></div>   
+    <footer>
+        El Tío Taxi &copy; 2021
+     </footer>  
+     
+</div>
+</body>
+
+<script>
+    const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
+
+    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tiles = L.tileLayer(tileUrl, { attribution });
+    tiles.addTo(mymap);
+
+</script>
+
+</html>
