@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tio Taxis</title>
+  <link rel="icon" href="taxi.png" type="image / icon type">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="/css/Estilos.css" />
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="gorro">
+          <img src = "/img/gorrotaxi.png" />
+        </header>
+        <header>
+          <h1>El Tio Taxis
+          <img src="/img/taxipeq.png"/>
+          </h1>
+        </header>
+        
+        <label for="start">Start date:</label>   
+        <input type="datetime-local" id="start" name="trip-end">
+        <br>
+        <label for="end">End date: </label>
+        <input type="datetime-local" id="end" name="trip-end">
+        <a class="Enviar" onclick="Enviar()">Consultar</a>
+        <a class= "index" href="/">Volver a pagina de inicio</a>
+        <br>
+        <br>
+        
+    <div id="mapid"></div>   
+    <footer>
+        El Tío Taxi &copy; 2021
+     </footer>  
+     
+</div>
+</body>
+
+<script>
+   const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
+        var polyline = L.polyline([["0", "0"]], { color: "red" }).addTo(mymap)
+        const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, {
+            attribution
+        });
+        tiles.addTo(mymap);
+
+        $("#Enviar").click(async function () {
+            var start =$("#start").val()
+            var end=$("#end").val()
+            const response = await fetch(`http://3.19.65.164/api/polyline/${start};${end}`)
+            const data = await response.json();
+            const {rows} = data;
+            var latlon=Array(rows.length)
+            
+            for (i = 0;i<rows.length;i++){
+                latlon[i]=([rows[i].Latitud,rows[i].Longitud])    
+            }
+
+            polyline.setLatLngs([latlon])
+
+        })
+
+</script>
+
+</html>

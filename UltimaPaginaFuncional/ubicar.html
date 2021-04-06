@@ -47,12 +47,30 @@
 </body>
 
 <script>
-    const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
+   const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
+        var polyline = L.polyline([["0", "0"]], { color: "red" }).addTo(mymap)
+        const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, {
+            attribution
+        });
+        tiles.addTo(mymap);
 
-    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const tiles = L.tileLayer(tileUrl, { attribution });
-    tiles.addTo(mymap);
+        $(".Enviar").click(async function () {
+            var start =$("#start").val()
+            var end=$("#end").val()
+            const response = await fetch(`http://181.235.102.134/api/polyline/${start};${end}`)
+            const data = await response.json();
+            const {rows} = data;
+            var latlon=Array(rows.length)
+            
+            for (i = 0;i<rows.length;i++){
+                latlon[i]=([rows[i].Latitud,rows[i].Longitud])    
+            }
+
+            polyline.setLatLngs([latlon])
+
+        })
 
 </script>
 

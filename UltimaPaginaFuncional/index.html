@@ -80,26 +80,30 @@
 
   async function Taxi() {
 
-    const response = await fetch('lastData.txt')
+    const response = await fetch('http://181.235.102.134/api/')
     const data = await response.json();
-    const { lat, lon, tim } = data;
-    latlon.push([lat,lon])
-    
+    const {rows} = data;
+    rows[0].Time = rows[0].Time.split(".")[0]
+    console.log(rows)
+    latlon.push([rows[0].Latitud, rows[0].Longitud])
+    var Time = rows[0].Time
+
     polyline.setLatLngs([latlon])
-    marker.setLatLng([lat, lon]).bindPopup("["+lat+", "+lon+"]").openPopup;
-    document.getElementById("lat").textContent = lat;
-    document.getElementById("long").textContent = lon;
-    document.getElementById("tim").textContent = tim;
-    contador=contador+1
+    marker.setLatLng([rows[0].Latitud, rows[0].Longitud]).bindPopup("[" + rows[0].Latitud + ", " + rows[0].Longitud + "]").openPopup;
+    document.getElementById("lat").textContent = rows[0].Latitud;
+    document.getElementById("long").textContent = rows[0].Longitud;
+    document.getElementById("tim").textContent = Time;
+    contador = contador + 1
 
 
   }
 
   async function bottonFunction(){
-      const response =await fetch('lastData.txt')
-      const data = await response.json();
-      const {lat,lon,tim}=data;
-      mymap.setView([lat,lon]);
+    const response = await fetch('http://181.235.102.134/api/')
+    const data = await response.json();
+    const {rows} = data;
+    const { Latitud, Longitud, Time } = rows[0];  
+    mymap.setView([Latitud, Longitud]);
   } 
 
 
