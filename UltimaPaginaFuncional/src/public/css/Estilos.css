@@ -1,0 +1,52 @@
+body{
+    background: #ffee00;
+    font-family: Copperplate / Copperplate Gothic Light, sans-serif ;
+    font-size: 10px;
+}
+
+#container{
+    width: 1300px;
+   margin: 0px auto;
+
+}
+
+header{
+    font-size: 15px;
+    border-bottom: 3px  black;
+    
+}
+
+#gorro{
+   
+    text-align: center;
+    height: 5px;
+    width: 100%;
+}
+
+table{
+    border-bottom: 3px dashed black;
+    font-size: 20px;
+}
+
+button{
+    float: right;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+footer{
+    background: black;
+    color: white;
+    text-align: center;
+    height: 25px;
+    line-height: 150%;
+    font-size: 20px;
+}
+
+#mapid {
+    height: 450px;
+    width: 100%;
+  }
+
