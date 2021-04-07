@@ -62,7 +62,7 @@
 		$("#Enviar").click(async function () {
 			var start = $("#start").val();
 			var end = $("#end").val();
-			const response = await fetch(`http://3.142.82.85/api/polyline/${start};${end}`);
+			const response = await fetch(`http://54.227.173.31/api/polyline/${start};${end}`);
 			const data = await response.json();
 			const {rows} = data;
 			var latlon = Array(rows.length);

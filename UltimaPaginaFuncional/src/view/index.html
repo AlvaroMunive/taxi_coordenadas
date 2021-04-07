@@ -76,7 +76,7 @@
 	tiles.addTo(mymap);
 
 	async function Taxi() {
-		const response = await fetch("http://3.142.82.85/api/");
+		const response = await fetch("http://54.227.173.31/api/");
 		const data = await response.json();
 		const {rows} = data;
 		rows[0].Time = rows[0].Time.split(".")[0];
@@ -95,7 +95,7 @@
 	}
 
 	async function bottonFunction() {
-		const response = await fetch("http://3.142.82.85/api/");
+		const response = await fetch("http://54.227.173.31/api/");
 		const data = await response.json();
 		const {rows} = data;
 		const {Latitud, Longitud, Time} = rows[0];

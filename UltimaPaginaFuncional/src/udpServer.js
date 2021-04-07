@@ -4,7 +4,7 @@ const socket = dgram.createSocket('udp4');
 
 const { pool, Client } = require("pg");
 const connectionString =
-    "postgressql://Alvaro:azereje12@serverbase.cigz349a2wix.us-east-2.rds.amazonaws.com:5432/serverbase0";
+    "";
 const client = new Client({
     connectionString: connectionString,
 });
