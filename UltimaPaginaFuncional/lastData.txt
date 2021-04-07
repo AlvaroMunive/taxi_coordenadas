@@ -1,1 +1,0 @@
-{"lat":undefined,"lon":undefined,"tim":undefined}
