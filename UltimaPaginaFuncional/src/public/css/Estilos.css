@@ -23,6 +23,7 @@ header{
     text-align: center;
     height: 5px;
     width: 100%;
+    z-index: -1;
 }
 
 #tabla{
@@ -60,6 +61,7 @@ footer{
     background-color: black;
     border-radius: 6px;
     border: 2px solid black;
+    z-index: 1;
   }
 .historial:hover{
     color: black;
@@ -81,6 +83,7 @@ footer{
 .localizar:hover{
     color: black;
     background-color: #ffee00;
+    cursor: pointer;
   }
 
 .Enviar{
@@ -100,6 +103,7 @@ footer{
 .Enviar:hover{
     color: black;
     background-color: #ffee00;
+    cursor: pointer;
   }
 
 .index{

@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/Estilos.css" />
 
 </head>
@@ -33,7 +34,7 @@
         <br>
         <label for="end">End date: </label>
         <input type="datetime-local" id="end" name="trip-end">
-        <a class="Enviar" onclick="Enviar()">Consultar</a>
+        <a class="Enviar" id="Enviar" onclick="Enviar()">Consultar</a>
         <a class= "index" href="/">Volver a pagina de inicio</a>
         <br>
         <br>
