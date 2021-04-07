@@ -1,109 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>El Tio Taxis</title>
+		<link rel="icon" href="img/taxi.png" type="image / icon type" />
+		<!--Lealflet-->
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+			integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+			crossorigin=""
+		/>
+		<script
+			src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+			crossorigin=""
+		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="/css/Estilos.css" />
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Tio Taxis</title>
-  <link rel="icon" href="https://img.icons8.com/emoji/48/000000/oncoming-taxi.png" type="image / icon type">
-  <!--Lealflet-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-  <link rel="stylesheet" href="/css/Estilos.css" />
-</head>
+	<body>
+		<div id="container">
+			<header id="gorro">
+				<img src="/img/gorrotaxi.png" />
+			</header>
+			<header>
+				<h1>
+					El Tio Taxis
+					<img src="/img/taxipeq.png" />
+				</h1>
+			</header>
 
-<body>
+			<a class="localizar" onclick="bottonFunction()">Localizar Taxi</a>
+			<a class="historial" href="ubicar">Solicitar Historial</a>
+			<table id="tabla">
+				<br />
+				<tr>
+					<td>Longitud</td>
+					<td>Latitud</td>
+					<td>Tiempo</td>
+				</tr>
 
-  <div id="container">
-    <header id="gorro">
-      <img src="/img/gorrotaxi.png" />
-    </header>
-    <header>
-      <h1>El Tio Taxis
-        <img src="https://img.icons8.com/emoji/48/000000/oncoming-taxi.png" />
-      </h1>
-    </header>
+				<tr>
+					<td><span id="lat"></span></td>
+					<td><span id="long"></span></td>
+					<td><span id="tim"></span></td>
+				</tr>
+			</table>
 
-    <button onclick="bottonFunction()">Localizar Taxi</button>
-    <table>
+			<div id="mapid"></div>
 
-      <a href="http://181.235.102.134/ubicar">
-        <h2>Solicitar Historial</h2>
-      </a>.
-      <br>
-      <tr>
-        <td>Latitud</td>
-        <td>Longitud</td>
-        <td>Tiempo</td>
-      </tr>
-
-      <tr>
-        <td><span id="lat"></span></td>
-        <td><span id="long"></span></td>
-        <td><span id="tim"></span></td>
-      </tr>
-
-    </table>
-
-    <div id="mapid"></div>
-
-    <footer>
-      El Tío Taxi &copy; 2021
-    </footer>
-
-  </div>
-
-</body>
-
+			<footer>El Tío Taxi &copy; 2021</footer>
+		</div>
+	</body>
 </html>
 <!--Lealflet settings-->
 <script>
-  const mymap = L.map('mapid').setView([10.9861045, -74.80928094], 13);
-  const marker = L.marker([0, 0]).addTo(mymap)
-  var polyline = L.polyline([["0", "0"]], { color: "red" }).addTo(mymap)
-  var contador = 0
-  let latlon = Array(0)
+	const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
+	var customIcon = new L.Icon({
+		iconUrl: "/img/taxipeq.png",
+		iconSize: [28, 28]
+	});
+	const marker = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
+	var polyline = L.polyline([["0", "0"]], {color: "red"}).addTo(mymap);
+	var contador = 0;
+	let latlon = Array(0);
 
+	const attribution =
+		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+	const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+	const tiles = L.tileLayer(tileUrl, {attribution});
+	tiles.addTo(mymap);
 
-  const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  const tiles = L.tileLayer(tileUrl, { attribution });
-  tiles.addTo(mymap);
+	async function Taxi() {
+		const response = await fetch("http://54.227.173.31/api/");
+		const data = await response.json();
+		const {rows} = data;
+		rows[0].Time = rows[0].Time.split(".")[0];
+		console.log(rows);
+		latlon.push([rows[0].Latitud, rows[0].Longitud]);
+		var Time = rows[0].Time;
 
-  async function Taxi() {
+		polyline.setLatLngs([latlon]);
+		marker
+			.setLatLng([rows[0].Latitud, rows[0].Longitud])
+			.bindPopup("[" + rows[0].Latitud + ", " + rows[0].Longitud + "]").openPopup;
+		document.getElementById("lat").textContent = rows[0].Latitud;
+		document.getElementById("long").textContent = rows[0].Longitud;
+		document.getElementById("tim").textContent = Time;
+		contador = contador + 1;
+	}
 
-    const response = await fetch('http://181.235.102.134/api/')
-    const data = await response.json();
-    const {rows} = data;
-    rows[0].Time = rows[0].Time.split(".")[0]
-    console.log(rows)
-    latlon.push([rows[0].Latitud, rows[0].Longitud])
-    var Time = rows[0].Time
+	async function bottonFunction() {
+		const response = await fetch("http://54.227.173.31/api/");
+		const data = await response.json();
+		const {rows} = data;
+		const {Latitud, Longitud, Time} = rows[0];
+		mymap.setView([Latitud, Longitud]);
+	}
 
-    polyline.setLatLngs([latlon])
-    marker.setLatLng([rows[0].Latitud, rows[0].Longitud]).bindPopup("[" + rows[0].Latitud + ", " + rows[0].Longitud + "]").openPopup;
-    document.getElementById("lat").textContent = rows[0].Latitud;
-    document.getElementById("long").textContent = rows[0].Longitud;
-    document.getElementById("tim").textContent = Time;
-    contador = contador + 1
-
-
-  }
-
-  async function bottonFunction() {
-    const response = await fetch('http://181.235.102.134/api/')
-    const data = await response.json();
-    const {rows} = data;
-    const { Latitud, Longitud, Time } = rows[0];  
-    mymap.setView([Latitud, Longitud]);
-  }
-
-
-  setInterval('Taxi()', 3000);
-  window.addEventListener("load", Taxi);
+	setInterval("Taxi()", 3000);
+	window.addEventListener("load", Taxi);
 </script>

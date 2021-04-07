@@ -1,52 +1,137 @@
-body{
-    background: #ffee00;
-    font-family: Copperplate / Copperplate Gothic Light, sans-serif ;
-    font-size: 10px;
+body {
+	background: #ffee00;
+	font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+	font-size: 10px;
 }
 
-#container{
-    width: 1300px;
-   margin: 0px auto;
-
+#container {
+	width: 1300px;
+	margin: 0px auto;
 }
 
-header{
-    font-size: 15px;
-    border-bottom: 3px  black;
-    
+header {
+	font-size: 15px;
+	border-bottom: 3px black;
 }
 
-#gorro{
-   
-    text-align: center;
-    height: 5px;
-    width: 100%;
+#gorro {
+	text-align: center;
+	height: 5px;
+	width: 100%;
+	z-index: -1;
 }
 
-table{
-    border-bottom: 3px dashed black;
-    font-size: 20px;
+#tabla {
+	border-bottom: 3px dashed black;
+	font-size: 20px;
+	border-collapse: separate;
+	border-spacing: auto;
+	text-align: center;
+	width: 400px;
 }
 
-button{
-    float: right;
-    color:black;
-    font-size: 20px;
-    font-weight: bold;
-    
-}
-
-footer{
-    background: black;
-    color: white;
-    text-align: center;
-    height: 25px;
-    line-height: 150%;
-    font-size: 20px;
+footer {
+	background: black;
+	color: white;
+	text-align: center;
+	height: 25px;
+	line-height: 150%;
+	font-size: 20px;
 }
 
 #mapid {
-    height: 450px;
-    width: 100%;
-  }
+	height: 450px;
+	width: 100%;
+}
 
+.historial {
+	float: right;
+	text-decoration: none;
+	padding: 5px;
+	font-weight: 600;
+	font-size: 20px;
+	height: 22px;
+	margin: 2px;
+	color: #ffffff;
+	background-color: black;
+	border-radius: 6px;
+	border: 2px solid black;
+	z-index: 1;
+}
+.historial:hover {
+	color: black;
+	background-color: #ffee00;
+}
+.localizar {
+	float: right;
+	text-decoration: none;
+	padding: 5px;
+	font-weight: 600;
+	font-size: 20px;
+	height: 22px;
+	margin: 2px;
+	color: #ffffff;
+	background-color: black;
+	border-radius: 6px;
+	border: 2px solid black;
+}
+.localizar:hover {
+	color: black;
+	background-color: #ffee00;
+	cursor: pointer;
+}
+
+.Enviar {
+	float: right;
+	text-decoration: none;
+	padding: 5px;
+	font-weight: 600;
+	font-size: 20px;
+	height: 19px;
+	margin: 2px;
+	margin-bottom: 7px;
+	color: #ffffff;
+	background-color: black;
+	border-radius: 6px;
+	border: 2px solid black;
+}
+.Enviar:hover {
+	color: black;
+	background-color: #ffee00;
+	cursor: pointer;
+}
+
+.index {
+	float: right;
+	text-decoration: none;
+	padding: 5px;
+	font-weight: 600;
+	font-size: 20px;
+	height: 19px;
+	margin: 2px;
+	color: #ffffff;
+	background-color: black;
+	border-radius: 6px;
+	border: 2px solid black;
+}
+.index:hover {
+	color: black;
+	background-color: #ffee00;
+}
+
+label {
+	font-size: 20px;
+	line-height: 110%;
+}
+#start {
+	background-color: #ffee00;
+	color: black;
+	border-color: black;
+	border-radius: 5px;
+}
+#end {
+	background-color: #ffee00;
+	color: black;
+	border-color: black;
+	border-radius: 5px;
+}
