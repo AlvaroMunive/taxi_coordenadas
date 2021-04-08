@@ -5,12 +5,12 @@ const connectionString =
 const client = new Client({
   connectionString: connectionString,
 });
-client.connect(function (err) {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log("DB connected")
-  }
+client.connect(function(err) {
+    if(err){
+        console.log(err)
+    }else{
+        console.log("DB connected")
+    }
 
 });
-module.exports = client
+module.exports=client
