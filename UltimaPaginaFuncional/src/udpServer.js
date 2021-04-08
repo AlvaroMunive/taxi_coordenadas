@@ -4,14 +4,14 @@ const socket = dgram.createSocket('udp4');
 
 const { pool, Client } = require("pg");
 const connectionString =
-    "postgressql://styvenrosk:styvenrosk01@basedatos.citwaydibyjv.us-west-2.rds.amazonaws.com:5432/Datos";
+  "postgressql://AlvaroM:azereje12@basededatos.ci7ji3srm4eo.us-east-1.rds.amazonaws.com:5432/database1";
 const client = new Client({
-    connectionString: connectionString,
+connectionString: connectionString,
 });
 
-client.connect(function (err) {
-    if (err) {
-        console.log(err);
+client.connect(function(err) {
+    if(err){
+        console.log(err)
     }
 });
 
@@ -32,9 +32,10 @@ socket.on('message', (msg, rinfo) => {
     msg = msg.split(');').join('')
     data = msg.split(",")
 
+
     // Insertar dato entrante a la base de datos
     client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ');', (err, res) => {
-        if (err) {
+        if(err){
             console.log(err);
         }
 

@@ -6,7 +6,7 @@ const client = require("./../database");
 //routes
 
 router.get("/api", (req, res) => {
-  client.query(`SELECT "Latitud", "Longitud", "Time" FROM public.taxi_coordenadas ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
+  client.query(`SELECT "Latitud", "Longitud", "Time" FROM public.taxi_coordenadas ORDER BY id DESC LIMIT 1;`, (err, row, field)=>{
     if (!err) {
       res.json(row);
     } else {
@@ -20,7 +20,7 @@ router.get("/api", (req, res) => {
 
 router.get("/api/polyline/:id", (req, res) => {
   var { id } = req.params;
-  id = id.split(";")
+  id=id.split(";")
   const start = id[0].split("T");
   const end_ = id[1].split("T");
 
