@@ -1,6 +1,6 @@
 const { pool, Client } = require("pg");
 const connectionString =
-  "postgressql://Alvaro:azereje12@serverbase.cigz349a2wix.us-east-2.rds.amazonaws.com:5432/serverbase0";
+  "postgressql://Miguel:dff501d1@basededatos.cpjbfswkef6q.us-east-2.rds.amazonaws.com:5432/DatosTaxi";
 
 const client = new Client({
   connectionString: connectionString,
