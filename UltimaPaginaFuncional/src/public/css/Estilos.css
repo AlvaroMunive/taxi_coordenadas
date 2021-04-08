@@ -62,6 +62,8 @@ footer{
     border-radius: 6px;
     border: 2px solid black;
     z-index: 1;
+    animation: fadeIn; 
+    animation-duration: 2s; 
   }
 .historial:hover{
     color: black;
@@ -79,6 +81,8 @@ footer{
     background-color: black;
     border-radius: 6px;
     border: 2px solid black;
+    animation: fadeIn; 
+    animation-duration: 2s; 
   }
 .localizar:hover{
     color: black;
@@ -99,6 +103,8 @@ footer{
     background-color: black;
     border-radius: 6px;
     border: 2px solid black;
+    animation: fadeIn; 
+    animation-duration: 2s; 
   }
 .Enviar:hover{
     color: black;
@@ -118,6 +124,8 @@ footer{
     background-color: black;
     border-radius: 6px;
     border: 2px solid black;
+    animation: fadeIn; 
+    animation-duration: 2s; 
   }
 .index:hover{
     color: black;
@@ -142,3 +150,4 @@ label{
     border-color: black;
     border-radius: 5px;
  }
+
