@@ -16,6 +16,10 @@
     crossorigin=""></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/Estilos.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
 
 </head>
 
@@ -26,7 +30,7 @@
     <img src = "/img/gorrotaxi.png" />
   </header>
   <header>
-    <h1>El Tio Taxis
+    <h1 class="animate__animated animate__bounce">El Tio Taxis
     <img src="/img/taxipeq.png"/>
     </h1>
   </header>
@@ -69,7 +73,7 @@
   iconSize:[28,28]
   });
   const marker = L.marker([0, 0],{icon:customIcon}).addTo(mymap)
-  var polyline =L.polyline([["0","0"]], {color: "red"}).addTo(mymap)
+  var polyline =L.polyline([["0","0"]], {color: "black"}).addTo(mymap)
   var contador =0
   let latlon= Array(0)
   
