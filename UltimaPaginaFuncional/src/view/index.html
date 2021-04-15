@@ -92,7 +92,7 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		const response = await fetch("http://52.24.190.74/api/polyline/${start};${end}");
+		const response = await fetch("http://eltiotaxis.onthewifi.com/api/polyline/${start};${end}");
 		const data = await response.json();
 		const {rows} = data;
 		rows[0].Time = rows[0].Time.split(".")[0];
