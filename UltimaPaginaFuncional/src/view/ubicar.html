@@ -64,9 +64,26 @@
 	</body>
 
 	<script>
-		// Seleccionar maximo y minimo para los calendarios
+		//Obtener fecha de hoy
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //enero es 0!
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = "0" + dd;
+		}
+		if (mm < 10) {
+			mm = "0" + mm;
+		}
+		today = yyyy + "-" + mm + "-" + dd + "T00:00";
+		//Inicialziar el segundo calendario con la fecha de hoy
+		document.getElementById("end").value = today;
+
+		// Seleccionar maximo y minimo para los calendarios segun las fechas seleccionadas
 		$("#end").click(async function () {
 			document.getElementById("end").min = $("#start").val();
+			//Definir que la fecha maxima por defecto sea la del dia de hoy
+			document.getElementById("end").max = today;
 		});
 		$("#start").click(async function () {
 			document.getElementById("start").max = $("#end").val();
@@ -92,7 +109,7 @@
 		$("#Enviar").click(async function () {
 			var start = $("#start").val();
 			var end = $("#end").val();
-			//fetch a la api con los rangos de los calendarios 
+			//Fetch a la api con los rangos de los calendarios
 			const response = await fetch(`http://''/api/polyline/${start};${end}`);
 			const data = await response.json();
 			const {rows} = data;

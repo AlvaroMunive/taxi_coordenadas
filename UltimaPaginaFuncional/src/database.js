@@ -14,5 +14,5 @@ client.connect(function (err) {
     }
 
 });
-//exportar el objeto client
+//Exportar el objeto client
 module.exports = client
