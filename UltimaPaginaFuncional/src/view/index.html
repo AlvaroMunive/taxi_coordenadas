@@ -38,22 +38,22 @@
   
       <a class="localizar" onclick="bottonFunction()">Localizar Taxi</a> 
       <a class="historial" href="ubicar">Solicitar Historial</a>
-  <table id="tabla">
+  <table class="tabla">
 
       
     <br>
-    <tr>
-      <td >Longitud</td>
-      <td >Latitud</td>
-      <td >Tiempo</td>
-    </tr>
-
-    <tr>
-      <td><span id="lat"></span></td>
-      <td><span id="long"></span></td>
-      <td><span id="tim"></span></td>
-    </tr>
-
+    <thead>
+      <th >Longitud</th>
+      <th >Latitud</th>
+      <th >Tiempo</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Latitud"><span id="lat"></span></td>
+        <td data-label="Longitud"><span id="long"></span></td>
+        <td data-label="Tiempo"><span id="tim"></span></td>
+      </tr>
+    </tbody>
   </table>
 
   <div id="mapid"></div>

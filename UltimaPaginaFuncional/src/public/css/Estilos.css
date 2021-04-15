@@ -1,7 +1,7 @@
 body{
     background: #ffee00;
     font-family: Copperplate / Copperplate Gothic Light, sans-serif ;
-    font-size: 15px;
+    font-size: 15%;
 }
 
 #container{
@@ -32,13 +32,13 @@ header{
     box-sizing:border-box;
 }
 
-#tabla{
+.tabla{
     border-bottom: 3px dashed black;
-    font-size: 18px;
-    border-collapse: separate;
+    font-size: 17px;
+    border-collapse: collapse;
     border-spacing: auto;
     text-align: center;
-    width: 70%;
+    width: 100%;
     box-sizing:border-box;
    }
 
@@ -172,4 +172,43 @@ label{
     margin-bottom: 7px;
  }
  
+ @media screen and (max-width: 400px) and (min-width: 330px) {
+	.tabla thead {
+		display: none;
+	}
+	.tabla,
+	.tabla tbody,
+	.tabla tr,
+	.tabla td {
+		display: block;
+		width: 100%;
+	}
+  .tabla tr{
+    margin-bottom: 15px;
+  }
+  .tabla td::before{
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+
+  }
+ }
+@media (max-width: 330px) {
+  .tabla thead {
+		display: none;
+	}
+	.tabla,
+	.tabla tbody,
+	.tabla tr,
+	.tabla td {
+		display: block;
+		width: 100%;
+	}
+}
+
 
