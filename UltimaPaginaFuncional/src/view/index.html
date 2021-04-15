@@ -46,7 +46,7 @@
 			</header>
 			<!--Boton solicitar historial-->
 			<a class="historial" href="ubicar">Solicitar Historial</a>
-			<br />
+
 			<!--Tabla-->
 			<table class="tabla">
 				<thead>
@@ -91,7 +91,7 @@
 	tiles.addTo(mymap);
 
 	async function Taxi() {
-		//fetch para obtener el ultimo dato de la base de datos
+		//Fetch para obtener el ultimo dato de la base de datos
 		const response = await fetch("http://empresataxitio.sytes.net/api/");
 		const data = await response.json();
 		const {rows} = data;
