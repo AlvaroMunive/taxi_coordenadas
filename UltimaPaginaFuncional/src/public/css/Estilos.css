@@ -26,6 +26,14 @@ header {
 	box-sizing: border-box;
 }
 
+#gorro2 {
+	text-align: left;
+	height: auto;
+	width: auto;
+	z-index: -1;
+	box-sizing: border-box;
+}
+
 .tabla {
 	border-bottom: 3px dashed black;
 	font-size: 17px;
