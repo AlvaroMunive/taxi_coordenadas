@@ -1,16 +1,16 @@
 const { pool, Client } = require("pg");
 const connectionString =
-  "";
+    "";
 
 const client = new Client({
-  connectionString: connectionString,
+    connectionString: connectionString,
 });
-client.connect(function(err) {
-    if(err){
+client.connect(function (err) {
+    if (err) {
         console.log(err)
-    }else{
+    } else {
         console.log("DB connected")
     }
 
 });
-module.exports=client
+module.exports = client
