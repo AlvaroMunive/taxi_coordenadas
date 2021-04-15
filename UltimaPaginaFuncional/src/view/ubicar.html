@@ -8,7 +8,8 @@
 			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
 		/>
 		<title>El Tio Taxis</title>
-		<link rel="icon" href="taxi.png" type="image / icon type" />
+		<link rel="icon" href="/img/taxi.png" type="image / icon type" />
+		<!--Leaflet-->
 		<link
 			rel="stylesheet"
 			href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -20,8 +21,10 @@
 			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 			crossorigin=""
 		></script>
+		<!--Ajax-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="/css/Estilos.css" />
+		<!--Animated-->
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -32,38 +35,43 @@
 
 	<body>
 		<div id="container">
+			<!--Logo central-->
 			<header id="gorro">
 				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
 			</header>
+			<!--El tio taxi + logo-->
 			<header>
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
 					<img src="/img/taxipeq.png" />
 				</h1>
 			</header>
-
+			<!--Calendarios-->
 			<label for="start">Start date:</label>
 			<input type="datetime-local" id="start" name="trip-end" />
 			<br />
 			<label for="end">End date: </label>
 			<input type="datetime-local" id="end" name="trip-end" />
+			<!--Botones-->
 			<div>
-				<a class="Enviar" id="Enviar" onclick="Enviar()">Consultar</a>
+				<a class="Enviar" id="Enviar">Consultar</a>
 				<a class="index" href="/">Volver a pagina de inicio</a>
 			</div>
-
+			<!--Mapa-->
 			<div id="mapid"></div>
 			<footer>El Tío Taxi &copy; 2021</footer>
 		</div>
 	</body>
 
 	<script>
+		// Seleccionar maximo y minimo para los calendarios
 		$("#end").click(async function () {
 			document.getElementById("end").min = $("#start").val();
 		});
 		$("#start").click(async function () {
 			document.getElementById("start").max = $("#end").val();
 		});
+		//Inicializar mapa lealflet
 		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
 		var customIcon = new L.Icon({
 			iconUrl: "/img/circle.png",
@@ -76,33 +84,47 @@
 			attribution
 		});
 		tiles.addTo(mymap);
-
+		//Inicializar polilinea
 		var polyline = L.polyline
 			.antPath([["0", "0"]], {color: "black", delay: 1000})
 			.addTo(mymap);
-
+		//Funcion que ejecuta el boton de consultar
 		$("#Enviar").click(async function () {
 			var start = $("#start").val();
 			var end = $("#end").val();
-			const response = await fetch(`http://""/api/polyline/${start};${end}`);
+			//fetch a la api con los rangos de los calendarios 
+			const response = await fetch(`http://''/api/polyline/${start};${end}`);
 			const data = await response.json();
 			const {rows} = data;
+			//Si no hay datos, se muestra una alarma
 			if (rows[0] == undefined) {
 				alert("El rango escogido no contiene datos");
+			} else {
+				mymap.setView([rows[0].Latitud, rows[0].Longitud]);
 			}
+			//Se remueven layers del mapa
 			$(".leaflet-marker-icon").remove();
 			$(".leaflet-popup").remove();
-			console.log(rows[0]);
+			polyline.remove();
+			//Inicializar array de longitud igual a los datos obtenidos de la base de datos
 			var latlon = Array(rows.length);
-
+			//LLenar el array con los datos obtenidos de Latutud y Longitud
 			for (i = 0; i < rows.length; i++) {
 				latlon[i] = [rows[i].Latitud, rows[i].Longitud];
+				//Generar marcadores cada 3 datos
 				if (i % 3 == 0) {
 					rows[i].Time = rows[i].Time.split(".000Z").join("");
-					L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time)
-						.openPopup;
+					if (i == 0) {
+						L.marker(latlon[i], {icon: customIcon})
+							.addTo(mymap)
+							.bindPopup("Inicio :" + rows[0].Time)
+							.openPopup([rows[0].Latitud, rows[0].Longitud]);
+					}
+					L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
 				}
 			}
+			//Dibujar polilinea
+			polyline.addTo(mymap);
 			polyline.setLatLngs([latlon]);
 		});
 	</script>

@@ -21,8 +21,10 @@
 			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 			crossorigin=""
 		></script>
+		<!--Ajax-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="/css/Estilos.css" />
+		<!--Animated-->
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -31,18 +33,21 @@
 
 	<body>
 		<div id="container">
+			<!--Logo central-->
 			<header id="gorro">
 				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
 			</header>
 			<header>
+				<!--El tio taxi + Logo-->
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
 					<img src="/img/taxipeq.png" />
 				</h1>
 			</header>
-
+			<!--Boton solicitar historial-->
 			<a class="historial" href="ubicar">Solicitar Historial</a>
 			<br />
+			<!--Tabla-->
 			<table class="tabla">
 				<thead>
 					<th>Latitud</th>
@@ -57,21 +62,24 @@
 					</tr>
 				</tbody>
 			</table>
-
+			<!--Mapa leaflet-->
 			<div id="mapid"></div>
 
 			<footer>El Tío Taxi &copy; 2021</footer>
 		</div>
 	</body>
 </html>
-<!--Lealflet settings-->
+
 <script>
+	//Inicializar mapa lealflet
 	const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
 	var customIcon = new L.Icon({
 		iconUrl: "/img/taxipeq.png",
 		iconSize: [28, 28]
 	});
+	//Inicializar Marcador
 	const marker = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
+	//Inicializar Polilinea
 	var polyline = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
 	var contador = 0;
 	let latlon = Array(0);
@@ -83,25 +91,30 @@
 	tiles.addTo(mymap);
 
 	async function Taxi() {
-		const response = await fetch("http://""/api/");
+		//fetch para obtener el ultimo dato de la base de datos
+		const response = await fetch("http://''/api/");
 		const data = await response.json();
 		const {rows} = data;
 		rows[0].Time = rows[0].Time.split(".")[0];
 		console.log(rows);
+		//LLenar el array latlon con los datos entrantes
 		latlon.push([rows[0].Latitud, rows[0].Longitud]);
 		var Time = rows[0].Time;
-
+		// Generar polilinea apartir del array latlon
 		polyline.setLatLngs([latlon]);
+		//Actualizar la posicion del marcador con el ultimo dato
 		marker
 			.setLatLng([rows[0].Latitud, rows[0].Longitud])
 			.bindPopup("[" + rows[0].Latitud + ", " + rows[0].Longitud + "]").openPopup;
+		//Centrar el mapa en el marcador
 		mymap.setView([rows[0].Latitud, rows[0].Longitud]);
+		//Obtener cada dato por separado para utilizarlos en la tabla
 		document.getElementById("lat").textContent = rows[0].Latitud;
 		document.getElementById("long").textContent = rows[0].Longitud;
 		document.getElementById("tim").textContent = Time;
 		contador = contador + 1;
 	}
-
+	//Actualizar cada 3s
 	setInterval("Taxi()", 3000);
 	window.addEventListener("load", Taxi);
 </script>

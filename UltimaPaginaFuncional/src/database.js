@@ -5,6 +5,7 @@ const connectionString =
 const client = new Client({
     connectionString: connectionString,
 });
+//Generar conexion con la base de datos
 client.connect(function (err) {
     if (err) {
         console.log(err)
@@ -13,4 +14,5 @@ client.connect(function (err) {
     }
 
 });
+//exportar el objeto client
 module.exports = client

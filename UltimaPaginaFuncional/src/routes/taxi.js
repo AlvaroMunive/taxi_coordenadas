@@ -6,6 +6,7 @@ const client = require("./../database");
 //routes
 
 router.get("/api", (req, res) => {
+  //Obtener el ultimo dato de la base de datos
   client.query(`SELECT "Latitud", "Longitud", "Time" FROM public.taxi_coordenadas ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
     if (!err) {
       res.json(row);
@@ -23,7 +24,7 @@ router.get("/api/polyline/:id", (req, res) => {
   id = id.split(";")
   const start = id[0].split("T").join(" ");
   const end_ = id[1].split("T").join(" ");
-
+  //Obtener los datos en un rango especificador por id
   client.query(
     `SELECT "Latitud","Longitud","Time" FROM public.taxi_coordenadas WHERE "Time" >=\'${start}\' AND "Time" <=\'${end_}\';`,
     (err, rows, fields) => {
@@ -37,5 +38,5 @@ router.get("/api/polyline/:id", (req, res) => {
 });
 
 
-
+//Exportar rutas
 module.exports = router;
