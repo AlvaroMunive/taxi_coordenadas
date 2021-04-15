@@ -1,16 +1,16 @@
 const { pool, Client } = require("pg");
 const connectionString =
-  "postgressql://Brayan:tiotaxi22@basededatostaxi.csgckedzjvw7.us-east-2.rds.amazonaws.com:5432/postgres";
+    "postgressql://Brayan:tiotaxi22@basededatostaxi.csgckedzjvw7.us-east-2.rds.amazonaws.com:5432/postgres";
 
 const client = new Client({
-  connectionString: connectionString,
+    connectionString: connectionString,
 });
-client.connect(function(err) {
-    if(err){
+client.connect(function (err) {
+    if (err) {
         console.log(err)
-    }else{
+    } else {
         console.log("DB connected")
     }
 
 });
-module.exports=client
+module.exports = client
