@@ -64,7 +64,7 @@
         $("#Enviar").click(async function () {
             var start =$("#start").val()
             var end=$("#end").val()
-            const response = await fetch(`http://52.14.65.236/api/polyline/${start};${end}`)
+            const response = await fetch(`http://empresataxitio.sytes.net//api/polyline/${start};${end}`)
             const data = await response.json();
             const {rows} = data;
             var latlon=Array(rows.length)
