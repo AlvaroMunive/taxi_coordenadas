@@ -31,13 +31,10 @@
 		/>
 	</head>
 
-	<body>
+	<body >
 		<div id="container">
 			<!--Logo central-->
-			<header id="gorro">
-				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
-			</header>
-			<header ide="gorro2">
+				<header ide="gorro2">
 				<!--El tio taxi + Logo-->
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
@@ -92,7 +89,7 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		const response = await fetch("http://http://eltiotaxi.servegame.com//api/");
+		const response = await fetch("http://localhost/api/");
 		const data = await response.json();
 		const {rows} = data;
 		rows[0].Time = rows[0].Time.split(".")[0];
