@@ -92,7 +92,7 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		const response = await fetch("http://''/api/");
+		const response = await fetch("http://http://eltiotaxi.servegame.com//api/");
 		const data = await response.json();
 		const {rows} = data;
 		rows[0].Time = rows[0].Time.split(".")[0];

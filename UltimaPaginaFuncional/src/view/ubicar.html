@@ -110,7 +110,7 @@
 			var start = $("#start").val();
 			var end = $("#end").val();
 			//Fetch a la api con los rangos de los calendarios
-			const response = await fetch(`http://''/api/polyline/${start};${end}`);
+			const response = await fetch(`http://eltiotaxi.servegame.com/api/polyline/${start};${end}`);
 			const data = await response.json();
 			const {rows} = data;
 			//Si no hay datos, se muestra una alarma
