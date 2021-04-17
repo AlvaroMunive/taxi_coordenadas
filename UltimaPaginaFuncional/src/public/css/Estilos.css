@@ -1,5 +1,8 @@
 body {
-	background: #ffee00;
+	background-image : url("/img/bg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 	font-family: Copperplate / Copperplate Gothic Light, sans-serif;
 	font-size: 15%;
 }
@@ -18,8 +21,9 @@ header {
 	box-sizing: border-box;
 }
 
-#gorro {
-	text-align: center;
+
+#gorro2 {
+	text-align: left;
 	height: auto;
 	width: auto;
 	z-index: -1;

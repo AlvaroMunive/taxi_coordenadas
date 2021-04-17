@@ -40,7 +40,7 @@
 				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
 			</header>
 			<!--El tio taxi + logo-->
-			<header>
+			<header id="gorro2">
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
 					<img src="/img/taxipeq.png" />
@@ -52,6 +52,11 @@
 			<br />
 			<label for="end">End date: </label>
 			<input type="datetime-local" id="end" name="trip-end" />
+			<br />
+			<select name="taxi" id="taxi_id">
+				<option value="1">taxi#1</option>
+				<option value="2">taxi#2</option>
+			</select>
 			<!--Botones-->
 			<div>
 				<a class="Enviar" id="Enviar">Consultar</a>
@@ -109,40 +114,50 @@
 		$("#Enviar").click(async function () {
 			var start = $("#start").val();
 			var end = $("#end").val();
-			//Fetch a la api con los rangos de los calendarios
-			const response = await fetch(`http://''/api/polyline/${start};${end}`);
-			const data = await response.json();
-			const {rows} = data;
-			//Si no hay datos, se muestra una alarma
-			if (rows[0] == undefined) {
-				alert("El rango escogido no contiene datos");
-			} else {
-				mymap.setView([rows[0].Latitud, rows[0].Longitud]);
+
+			if ($("#taxi_id").val() == "1") {
+				//Fetch a la api con los rangos de los calendarios
+				const response = await fetch(`http://''/api/polyline/${start};${end};1`);
+				getpolyline(response);
+			} else if ($("#taxi_id").val() == "2") {
+				const response = await fetch(`http://''/api/polyline/${start};${end};2`);
+				getpolyline(response);
 			}
-			//Se remueven layers del mapa
-			$(".leaflet-marker-icon").remove();
-			$(".leaflet-popup").remove();
-			polyline.remove();
-			//Inicializar array de longitud igual a los datos obtenidos de la base de datos
-			var latlon = Array(rows.length);
-			//LLenar el array con los datos obtenidos de Latutud y Longitud
-			for (i = 0; i < rows.length; i++) {
-				latlon[i] = [rows[i].Latitud, rows[i].Longitud];
-				//Generar marcadores cada 3 datos
-				if (i % 3 == 0) {
-					rows[i].Time = rows[i].Time.split(".000Z").join("");
-					if (i == 0) {
-						L.marker(latlon[i], {icon: customIcon})
-							.addTo(mymap)
-							.bindPopup("Inicio :" + rows[0].Time)
-							.openPopup([rows[0].Latitud, rows[0].Longitud]);
-					}
-					L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
+
+			async function getpolyline(response) {
+				const data = await response.json();
+				const {rows} = data;
+				//Si no hay datos, se muestra una alarma
+				if (rows[0] == undefined) {
+					alert("El rango escogido no contiene datos");
+				} else {
+					mymap.setView([rows[0].Latitud, rows[0].Longitud]);
 				}
+				//Se remueven layers del mapa
+				$(".leaflet-marker-icon").remove();
+				$(".leaflet-popup").remove();
+				polyline.remove();
+				//Inicializar array de longitud igual a los datos obtenidos de la base de datos
+				var latlon = Array(rows.length);
+				//LLenar el array con los datos obtenidos de Latutud y Longitud
+				for (i = 0; i < rows.length; i++) {
+					latlon[i] = [rows[i].Latitud, rows[i].Longitud];
+					//Generar marcadores cada 3 datos
+					if (i % 3 == 0) {
+						rows[i].Time = rows[i].Time.split(".000Z").join("");
+						if (i == 0) {
+							L.marker(latlon[i], {icon: customIcon})
+								.addTo(mymap)
+								.bindPopup("Inicio :" + rows[0].Time)
+								.openPopup([rows[0].Latitud, rows[0].Longitud]);
+						}
+						L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
+					}
+				}
+				//Dibujar polilinea
+				polyline.addTo(mymap);
+				polyline.setLatLngs([latlon]);
 			}
-			//Dibujar polilinea
-			polyline.addTo(mymap);
-			polyline.setLatLngs([latlon]);
 		});
 	</script>
 </html>

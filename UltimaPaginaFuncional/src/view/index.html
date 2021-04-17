@@ -34,10 +34,7 @@
 	<body>
 		<div id="container">
 			<!--Logo central-->
-			<header id="gorro">
-				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
-			</header>
-			<header>
+			<header ide="gorro2">
 				<!--El tio taxi + Logo-->
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
@@ -78,11 +75,14 @@
 		iconSize: [28, 28]
 	});
 	//Inicializar Marcador
-	const marker = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
+	const marker1 = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
+	const marker2 = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
 	//Inicializar Polilinea
-	var polyline = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
-	var contador = 0;
-	let latlon = Array(0);
+	var polyline1 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
+	var polyline2 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
+
+	let latlon1 = Array(0);
+	let latlon2 = Array(0);
 
 	const attribution =
 		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -92,27 +92,47 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		const response = await fetch("http://''/api/");
-		const data = await response.json();
-		const {rows} = data;
-		rows[0].Time = rows[0].Time.split(".")[0];
-		console.log(rows);
+		var response = await fetch("http://''/api/1");
+		var data = await response.json();
+		const rows1 = data;
+
+		response = await fetch("http://''/api/2");
+		data = await response.json();
+		const rows2 = data;
+
+		rows1[0].Time = rows1[0].Time.split(".")[0];
+		rows2[0].Time = rows2[0].Time.split(".")[0];
+
 		//LLenar el array latlon con los datos entrantes
-		latlon.push([rows[0].Latitud, rows[0].Longitud]);
-		var Time = rows[0].Time;
+		latlon1.push([rows1[0].Latitud, rows1[0].Longitud]);
+		latlon2.push([rows2[0].Latitud, rows2[0].Longitud]);
 		// Generar polilinea apartir del array latlon
-		polyline.setLatLngs([latlon]);
+		polyline1.setLatLngs([latlon1]);
+		polyline2.setLatLngs([latlon2]);
 		//Actualizar la posicion del marcador con el ultimo dato
-		marker
-			.setLatLng([rows[0].Latitud, rows[0].Longitud])
-			.bindPopup("[" + rows[0].Latitud + ", " + rows[0].Longitud + "]").openPopup;
-		//Centrar el mapa en el marcador
-		mymap.setView([rows[0].Latitud, rows[0].Longitud]);
+		$(".leaflet-popup").remove();
+		marker1
+			.setLatLng([rows1[0].Latitud, rows1[0].Longitud])
+			.bindPopup("[" + rows1[0].Latitud + ", " + rows1[0].Longitud + "]", {
+				closeOnClick: false,
+				autoClose: false,
+				autoPan: false
+			})
+			.openPopup([rows1[0].Latitud, rows1[0].Longitud]);
+
+		marker2
+			.setLatLng([rows2[0].Latitud, rows2[0].Longitud])
+			.bindPopup("[" + rows2[0].Latitud + ", " + rows2[0].Longitud + "]", {
+				closeOnClick: false,
+				autoClose: false,
+				autoPan: false
+			})
+			.openPopup([rows2[0].Latitud, rows2[0].Longitud]);
+
 		//Obtener cada dato por separado para utilizarlos en la tabla
-		document.getElementById("lat").textContent = rows[0].Latitud;
-		document.getElementById("long").textContent = rows[0].Longitud;
-		document.getElementById("tim").textContent = Time;
-		contador = contador + 1;
+		document.getElementById("lat").textContent = rows1[0].Latitud;
+		document.getElementById("long").textContent = rows1[0].Longitud;
+		document.getElementById("tim").textContent = rows1[0].Time;
 	}
 	//Actualizar cada 3s
 	setInterval("Taxi()", 3000);
