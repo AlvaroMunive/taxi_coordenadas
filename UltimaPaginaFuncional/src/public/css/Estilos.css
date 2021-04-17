@@ -16,7 +16,7 @@ body {
 
 header {
 	width: auto;
-	font-size: 9px;
+	font-size: 15px;
 	border-bottom: 30px black;
 	box-sizing: border-box;
 }
@@ -134,6 +134,10 @@ label {
 	margin: 2px;
 	margin-bottom: 7px;
 }
+#start:hover{
+	cursor: pointer;
+}
+
 #end {
 	background-color: #ffee00;
 	color: black;
@@ -144,6 +148,10 @@ label {
 	height: auto;
 	margin: 2px;
 	margin-bottom: 7px;
+}
+
+#end:hover{
+	cursor: pointer;
 }
 
 @media screen and (max-width: 400px) and (min-width: 300px) {
@@ -189,3 +197,23 @@ label {
 		width: 100%;
 	}
 }
+
+.content-select select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	width: auto;
+	font-size: 15px;
+	height: auto;
+	background-color: #ffee00;
+	border-radius: 5px;
+	border-color: black;
+	margin: 2px;
+	border-width: 2px;
+
+}
+
+#taxi_id:hover{
+	cursor: pointer;
+}
+
