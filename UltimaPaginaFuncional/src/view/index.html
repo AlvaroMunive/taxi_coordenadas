@@ -79,7 +79,7 @@
 	const marker2 = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
 	//Inicializar Polilinea
 	var polyline1 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
-	var polyline2 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
+	var polyline2 = L.polyline([["0", "0"]], {color: "#ffee00"}).addTo(mymap);
 
 	let latlon1 = Array(0);
 	let latlon2 = Array(0);
@@ -91,12 +91,27 @@
 	tiles.addTo(mymap);
 
 	async function Taxi() {
-		//Fetch para obtener el ultimo dato de la base de datos
-		var response = await fetch("http://localhost/api/1");
+		//Fetch para obtener el ultimo dato de la base de datos        
+			var response = await fetch("http://3.19.65.164/api/1" , {
+                'mode': 'cors',
+                'headers': {
+                 "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "http://eltiotaxi.servegame.com/",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                
+
+        	}});
+
 		var data = await response.json();
 		const rows1 = data;
 
-		response = await fetch("http://localhost/api/2");
+		response = await fetch("http://3.19.65.164/api/2", {
+	        'mode': 'cors',
+                'headers': {
+                 "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "http://eltiotaxi.servegame.com/",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        	}});
 		data = await response.json();
 		const rows2 = data;
 
@@ -113,7 +128,7 @@
 		$(".leaflet-popup").remove();
 		marker1
 			.setLatLng([rows1[0].Latitud, rows1[0].Longitud])
-			.bindPopup("[" + rows1[0].Latitud + ", " + rows1[0].Longitud + "]", {
+			.bindPopup("<b>Taxi#1</b><br>[" + rows1[0].Latitud + ", " + rows1[0].Longitud + "]<br>"+ rows1[0].Time +"", {
 				closeOnClick: false,
 				autoClose: false,
 				autoPan: false
@@ -122,7 +137,7 @@
 
 		marker2
 			.setLatLng([rows2[0].Latitud, rows2[0].Longitud])
-			.bindPopup("[" + rows2[0].Latitud + ", " + rows2[0].Longitud + "]", {
+			.bindPopup("<b>Taxi#2</b><br>[" + rows2[0].Latitud + ", " + rows2[0].Longitud + "]<br>"+ rows2[0].Time +"", {
 				closeOnClick: false,
 				autoClose: false,
 				autoPan: false
@@ -138,3 +153,5 @@
 	setInterval("Taxi()", 3000);
 	window.addEventListener("load", Taxi);
 </script>
+
+

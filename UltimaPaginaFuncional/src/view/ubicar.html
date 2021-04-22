@@ -45,7 +45,7 @@
 			</header>
 			<!--Calendarios-->
 			<label for="start">Fecha Inicial:</label>
-			<input type="datetime-local" id="start" name="trip-end" />
+			<input type="datetime-local" id="start" name="trip-end"/>
 			<br />
 			<label for="end">Fecha Final: </label>
 			<input type="datetime-local" id="end" name="trip-end" />
@@ -72,21 +72,25 @@
 	</body>
 
 	<script>
+		
 		//Obtener fecha de hoy
+		
 		var today = new Date();
 		var dd = today.getDate();
 		var mm = today.getMonth() + 1; //enero es 0!
 		var yyyy = today.getFullYear();
+		var hora = today.getHours()+':'+ today.getMinutes();
 		if (dd < 10) {
 			dd = "0" + dd;
 		}
 		if (mm < 10) {
 			mm = "0" + mm;
 		}
-		today = yyyy + "-" + mm + "-" + dd + "T00:00";
+		today = yyyy + "-" + mm + "-" + dd + "T" +hora ;
+	
 		//Inicialziar el segundo calendario con la fecha de hoy
 		document.getElementById("end").value = today;
-
+		
 		// Seleccionar maximo y minimo para los calendarios segun las fechas seleccionadas
 		$("#end").click(async function () {
 			document.getElementById("end").min = $("#start").val();
@@ -96,6 +100,8 @@
 		$("#start").click(async function () {
 			document.getElementById("start").max = $("#end").val();
 		});
+		
+		
 		//Inicializar mapa lealflet
 		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
 		var customIcon = new L.Icon({
@@ -120,10 +126,20 @@
 
 			if ($("#taxi_id").val() == "1") {
 				//Fetch a la api con los rangos de los calendarios
-				const response = await fetch(`http://localhost/api/polyline/${start};${end};1`);
+				const response = await fetch(`http://localhost/api/polyline/${start};${end};1`, {
+	        'mode': 'cors',
+	        'headers': {
+            	'Access-Control-Allow-Origin': '*',
+        	}
+    	});
 				getpolyline(response);
 			} else if ($("#taxi_id").val() == "2") {
-				const response = await fetch(`http://localhost/api/polyline/${start};${end};2`);
+				const response = await fetch(`http://localhost/api/polyline/${start};${end};2`, {
+	        'mode': 'cors',
+	        'headers': {
+            	'Access-Control-Allow-Origin': '*',
+        	}
+    	});
 				getpolyline(response);
 			}
 

@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 const client = require("./../database");
-
+const cors = require('cors');
 
 //routes
-
+router.use(cors());
 router.get("/api/:id", (req, res) => {
   var { id } = req.params;
 
