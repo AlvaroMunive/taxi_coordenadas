@@ -1,5 +1,5 @@
 body {
-	background-image : url("/img/bg.jpg");
+	background-image: url("/img/bg.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -20,7 +20,6 @@ header {
 	border-bottom: 30px black;
 	box-sizing: border-box;
 }
-
 
 #gorro2 {
 	text-align: left;
@@ -72,6 +71,7 @@ footer {
 	animation: fadeIn;
 	animation-duration: 2s;
 }
+
 .historial:hover {
 	color: black;
 	background-color: #ffee00;
@@ -134,7 +134,7 @@ label {
 	margin: 2px;
 	margin-bottom: 7px;
 }
-#start:hover{
+#start:hover {
 	cursor: pointer;
 }
 
@@ -150,7 +150,7 @@ label {
 	margin-bottom: 7px;
 }
 
-#end:hover{
+#end:hover {
 	cursor: pointer;
 }
 
@@ -164,7 +164,7 @@ label {
 	.tabla td {
 		display: block;
 		width: 100%;
-		
+		z-index: -1;
 	}
 	.tabla tr {
 		margin-bottom: 15px;
@@ -196,10 +196,21 @@ label {
 	.tabla td {
 		display: block;
 		width: 100%;
+		z-index: -1;
+	}
+	.tabla tr {
+		margin-top: 35px;
+		margin-bottom: 15px;
+	}
+	.tabla td {
+		text-align: left;
+		padding-left: 0%;
+		text-align: center;
+		position: relative;
 	}
 }
 
-.content-select select{
+.content-select select {
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -211,10 +222,8 @@ label {
 	border-color: black;
 	margin: 2px;
 	border-width: 2px;
-
 }
 
-#taxi_id:hover{
+#taxi_id:hover {
 	cursor: pointer;
 }
-
