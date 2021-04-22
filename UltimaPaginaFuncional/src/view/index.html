@@ -21,8 +21,10 @@
 			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 			crossorigin=""
 		></script>
+
 		<!--Ajax-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!--Styles-->
 		<link rel="stylesheet" href="/css/Estilos.css" />
 		<!--Animated-->
 		<link
@@ -41,21 +43,30 @@
 					<img src="/img/taxipeq.png" />
 				</h1>
 			</header>
+
 			<!--Boton solicitar historial-->
 			<a class="historial" href="ubicar">Solicitar Historial</a>
-
+			<br />
 			<!--Tabla-->
 			<table class="tabla">
 				<thead>
+					<th>Taxi#</th>
 					<th>Latitud</th>
 					<th>Longitud</th>
 					<th>Tiempo</th>
 				</thead>
 				<tbody>
 					<tr>
+						<td data-label="Taxi#"><span id="id"></span></td>
 						<td data-label="Latitud"><span id="lat"></span></td>
 						<td data-label="Longitud"><span id="long"></span></td>
 						<td data-label="Tiempo"><span id="tim"></span></td>
+					</tr>
+					<tr>
+						<td data-label="Taxi#"><span id="id2"></span></td>
+						<td data-label="Latitud"><span id="lat2"></span></td>
+						<td data-label="Longitud"><span id="long2"></span></td>
+						<td data-label="Tiempo"><span id="tim2"></span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -69,17 +80,19 @@
 
 <script>
 	//Inicializar mapa lealflet
-	const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
+	const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 12);
 	var customIcon = new L.Icon({
 		iconUrl: "/img/taxipeq.png",
 		iconSize: [28, 28]
 	});
 	//Inicializar Marcador
 	const marker1 = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
-	const marker2 = L.marker([0, 0], {icon: customIcon}).addTo(mymap);
+	const marker2 = L.marker([0, 0], {
+		icon: customIcon
+	}).addTo(mymap);
 	//Inicializar Polilinea
 	var polyline1 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
-	var polyline2 = L.polyline([["0", "0"]], {color: "black"}).addTo(mymap);
+	var polyline2 = L.polyline([["0", "0"]], {color: "#ffee00"}).addTo(mymap);
 
 	let latlon1 = Array(0);
 	let latlon2 = Array(0);
@@ -92,11 +105,27 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		var response = await fetch("http://''/api/1");
+		var response = await fetch("http://''/api/1", {
+			mode: "cors",
+			headers: {
+				"Access-Control-Allow-Headers": "Content-Type",
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+			}
+		});
+
 		var data = await response.json();
 		const rows1 = data;
 
-		response = await fetch("http://''/api/2");
+		response = await fetch("http://''/api/2", {
+			mode: "cors",
+			headers: {
+				"Access-Control-Allow-Headers": "Content-Type",
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+			}
+		});
+
 		data = await response.json();
 		const rows2 = data;
 
@@ -113,26 +142,50 @@
 		$(".leaflet-popup").remove();
 		marker1
 			.setLatLng([rows1[0].Latitud, rows1[0].Longitud])
-			.bindPopup("[" + rows1[0].Latitud + ", " + rows1[0].Longitud + "]", {
-				closeOnClick: false,
-				autoClose: false,
-				autoPan: false
-			})
+			.bindPopup(
+				"<b>Taxi#1</b><br>[" +
+					rows1[0].Latitud +
+					", " +
+					rows1[0].Longitud +
+					"]<br>" +
+					rows1[0].Time +
+					"",
+				{
+					closeOnClick: false,
+					autoClose: false,
+					autoPan: false
+				}
+			)
 			.openPopup([rows1[0].Latitud, rows1[0].Longitud]);
 
 		marker2
 			.setLatLng([rows2[0].Latitud, rows2[0].Longitud])
-			.bindPopup("[" + rows2[0].Latitud + ", " + rows2[0].Longitud + "]", {
-				closeOnClick: false,
-				autoClose: false,
-				autoPan: false
-			})
+			.bindPopup(
+				"<b>Taxi#2</b><br>[" +
+					rows2[0].Latitud +
+					", " +
+					rows2[0].Longitud +
+					"]<br>" +
+					rows2[0].Time +
+					"",
+				{
+					closeOnClick: false,
+					autoClose: false,
+					autoPan: false
+				}
+			)
 			.openPopup([rows2[0].Latitud, rows2[0].Longitud]);
 
 		//Obtener cada dato por separado para utilizarlos en la tabla
+		document.getElementById("id").textContent = "1";
 		document.getElementById("lat").textContent = rows1[0].Latitud;
 		document.getElementById("long").textContent = rows1[0].Longitud;
 		document.getElementById("tim").textContent = rows1[0].Time;
+
+		document.getElementById("id2").textContent = "2";
+		document.getElementById("lat2").textContent = rows2[0].Latitud;
+		document.getElementById("long2").textContent = rows2[0].Longitud;
+		document.getElementById("tim2").textContent = rows2[0].Time;
 	}
 	//Actualizar cada 3s
 	setInterval("Taxi()", 3000);
