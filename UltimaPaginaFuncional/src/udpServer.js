@@ -27,19 +27,24 @@ socket.on('error', (err) => {
 socket.on('message', (msg, rinfo) => {
     //Arreglar formato del mensaje
     msg = msg.toString()
-    msg = msg.split('INSERT INTO `taxis1_coordenadas` (`Longitud`, `Latitud`, `Tiempo`) VALUES (').join('')
-    msg = msg.split(');').join('')
+    console.log(msg)
     data = msg.split(",")
 
-
-    // Insertar dato entrante a la base de datos
-    client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ');', (err, res) => {
-        if (err) {
-            console.log(err);
-        }
-
-
-    });
+    if (data[3] == "1") {
+        // Insertar dato entrante a la base de datos
+        client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ');', (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } else if (data[3] == "2") {
+        // Insertar dato entrante a la base de datos
+        client.query('INSERT INTO public.taxi_coordenadas2("Latitud", "Longitud", "Time")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ');', (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
 
 });
 //Escuchar puerto 3020

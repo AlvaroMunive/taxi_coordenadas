@@ -29,29 +29,37 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
-		<!--Ant path-->
+		<!--Pluguins-->
 		<script src="bundle.js"></script>
 	</head>
 
 	<body>
 		<div id="container">
 			<!--Logo central-->
-			<header id="gorro">
-				<img class="animate__animated animate__fadeIn" src="/img/gorrotaxi.png" />
-			</header>
 			<!--El tio taxi + logo-->
-			<header>
+			<header id="gorro2">
 				<h1 class="animate__animated animate__fadeIn">
 					El Tio Taxis
 					<img src="/img/taxipeq.png" />
 				</h1>
 			</header>
 			<!--Calendarios-->
-			<label for="start">Start date:</label>
-			<input type="datetime-local" id="start" name="trip-end" />
+			<label for="start">Fecha Inicial:</label>
+			<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
 			<br />
-			<label for="end">End date: </label>
-			<input type="datetime-local" id="end" name="trip-end" />
+			<label for="end">Fecha Final: </label>
+			<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
+			<br />
+			<!--Taxis-->
+			<div class="content-select">
+				<label for="content-select">Seleccione Taxi:</label>
+				<select name="taxi" id="taxi_id">
+					<option value="1">Taxi#1</option>
+					<option value="2">Taxi#2</option>
+				</select>
+				<i></i>
+			</div>
+
 			<!--Botones-->
 			<div>
 				<a class="Enviar" id="Enviar">Consultar</a>
@@ -65,17 +73,20 @@
 
 	<script>
 		//Obtener fecha de hoy
+
 		var today = new Date();
 		var dd = today.getDate();
 		var mm = today.getMonth() + 1; //enero es 0!
 		var yyyy = today.getFullYear();
+		var hora = today.getHours() + ":" + today.getMinutes();
 		if (dd < 10) {
 			dd = "0" + dd;
 		}
 		if (mm < 10) {
 			mm = "0" + mm;
 		}
-		today = yyyy + "-" + mm + "-" + dd + "T00:00";
+		today = yyyy + "-" + mm + "-" + dd + "T" + hora;
+
 		//Inicialziar el segundo calendario con la fecha de hoy
 		document.getElementById("end").value = today;
 
@@ -88,8 +99,9 @@
 		$("#start").click(async function () {
 			document.getElementById("start").max = $("#end").val();
 		});
+
 		//Inicializar mapa lealflet
-		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 13);
+		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 12);
 		var customIcon = new L.Icon({
 			iconUrl: "/img/circle.png",
 			iconSize: [6, 6]
@@ -109,40 +121,65 @@
 		$("#Enviar").click(async function () {
 			var start = $("#start").val();
 			var end = $("#end").val();
-			//Fetch a la api con los rangos de los calendarios
-			const response = await fetch(`http://empresataxitio.sytes.net/api/polyline/${start};${end}`);
-			const data = await response.json();
-			const {rows} = data;
-			//Si no hay datos, se muestra una alarma
-			if (rows[0] == undefined) {
-				alert("El rango escogido no contiene datos");
-			} else {
-				mymap.setView([rows[0].Latitud, rows[0].Longitud]);
-			}
-			//Se remueven layers del mapa
-			$(".leaflet-marker-icon").remove();
-			$(".leaflet-popup").remove();
-			polyline.remove();
-			//Inicializar array de longitud igual a los datos obtenidos de la base de datos
-			var latlon = Array(rows.length);
-			//LLenar el array con los datos obtenidos de Latutud y Longitud
-			for (i = 0; i < rows.length; i++) {
-				latlon[i] = [rows[i].Latitud, rows[i].Longitud];
-				//Generar marcadores cada 3 datos
-				if (i % 3 == 0) {
-					rows[i].Time = rows[i].Time.split(".000Z").join("");
-					if (i == 0) {
-						L.marker(latlon[i], {icon: customIcon})
-							.addTo(mymap)
-							.bindPopup("Inicio :" + rows[0].Time)
-							.openPopup([rows[0].Latitud, rows[0].Longitud]);
+			//Diferenciar entre taxis
+			if ($("#taxi_id").val() == "1") {
+				//Fetch a la api con los rangos de los calendarios
+				const response = await fetch(`http://'13.58.194.15'/api/polyline/${start};${end};1`, {
+					mode: "cors",
+					headers: {
+						"Access-Control-Allow-Headers": "Content-Type",
+						"Access-Control-Allow-Origin": "*",
+						"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
 					}
-					L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
-				}
+				});
+				getpolyline(response);
+			} else if ($("#taxi_id").val() == "2") {
+				const response = await fetch(`http://''/api/polyline/${start};${end};2`, {
+					mode: "cors",
+					headers: {
+						"Access-Control-Allow-Headers": "Content-Type",
+						"Access-Control-Allow-Origin": "*",
+						"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+					}
+				});
+
+				getpolyline(response);
 			}
-			//Dibujar polilinea
-			polyline.addTo(mymap);
-			polyline.setLatLngs([latlon]);
+			//Funcion para la creacion de la polylinea
+			async function getpolyline(response) {
+				const data = await response.json();
+				const {rows} = data;
+				//Si no hay datos, se muestra una alarma
+				if (rows[0] == undefined) {
+					alert("El rango escogido no contiene datos");
+				} else {
+					mymap.setView([rows[0].Latitud, rows[0].Longitud]);
+				}
+				//Se remueven layers del mapa
+				$(".leaflet-marker-icon").remove();
+				$(".leaflet-popup").remove();
+				polyline.remove();
+				//Inicializar array de longitud igual a los datos obtenidos de la base de datos
+				var latlon = Array(rows.length);
+				//LLenar el array con los datos obtenidos de Latutud y Longitud
+				for (i = 0; i < rows.length; i++) {
+					latlon[i] = [rows[i].Latitud, rows[i].Longitud];
+					//Generar marcadores cada 3 datos
+					if (i % 3 == 0) {
+						rows[i].Time = rows[i].Time.split(".000Z").join("");
+						if (i == 0) {
+							L.marker(latlon[i], {icon: customIcon})
+								.addTo(mymap)
+								.bindPopup("Inicio :" + rows[0].Time)
+								.openPopup([rows[0].Latitud, rows[0].Longitud]);
+						}
+						L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
+					}
+				}
+				//Dibujar polilinea
+				polyline.addTo(mymap);
+				polyline.setLatLngs([latlon]);
+			}
 		});
 	</script>
 </html>
