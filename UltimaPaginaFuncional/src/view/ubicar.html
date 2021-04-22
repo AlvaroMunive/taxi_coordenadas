@@ -126,7 +126,7 @@
 
 			if ($("#taxi_id").val() == "1") {
 				//Fetch a la api con los rangos de los calendarios
-				const response = await fetch(`http://localhost/api/polyline/${start};${end};1`, {
+				const response = await fetch(`http://3.19.65.164/api/polyline/${start};${end};1`, {
 	        'mode': 'cors',
 	        'headers': {
             	'Access-Control-Allow-Origin': '*',
@@ -134,7 +134,7 @@
     	});
 				getpolyline(response);
 			} else if ($("#taxi_id").val() == "2") {
-				const response = await fetch(`http://localhost/api/polyline/${start};${end};2`, {
+				const response = await fetch(`http://3.19.65.164/api/polyline/${start};${end};2`, {
 	        'mode': 'cors',
 	        'headers': {
             	'Access-Control-Allow-Origin': '*',
