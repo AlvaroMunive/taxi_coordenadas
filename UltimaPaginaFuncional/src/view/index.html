@@ -31,6 +31,8 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
+		<!--ip-->
+		<script type="text/javascript" src="ip.js"></script>
 	</head>
 
 	<body>
@@ -105,7 +107,7 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		var response = await fetch("http://''/api/1", {
+		var response = await fetch(`http://${ip}/api/1`, {
 			mode: "cors",
 			headers: {
 				"Access-Control-Allow-Headers": "Content-Type",
@@ -117,7 +119,7 @@
 		var data = await response.json();
 		const rows1 = data;
 
-		response = await fetch("http://''/api/2", {
+		response = await fetch(`http://${ip}/api/2`, {
 			mode: "cors",
 			headers: {
 				"Access-Control-Allow-Headers": "Content-Type",
@@ -151,12 +153,12 @@
 					rows1[0].Time +
 					"",
 				{
-					closeOnClick: false,
+					closeOnClick: true,
 					autoClose: false,
 					autoPan: false
 				}
-			)
-			.openPopup([rows1[0].Latitud, rows1[0].Longitud]);
+			);
+		//.openPopup([rows1[0].Latitud, rows1[0].Longitud]);
 
 		marker2
 			.setLatLng([rows2[0].Latitud, rows2[0].Longitud])
@@ -169,12 +171,12 @@
 					rows2[0].Time +
 					"",
 				{
-					closeOnClick: false,
+					closeOnClick: true,
 					autoClose: false,
 					autoPan: false
 				}
-			)
-			.openPopup([rows2[0].Latitud, rows2[0].Longitud]);
+			);
+		//.openPopup([rows2[0].Latitud, rows2[0].Longitud]);
 
 		//Obtener cada dato por separado para utilizarlos en la tabla
 		document.getElementById("id").textContent = "1";

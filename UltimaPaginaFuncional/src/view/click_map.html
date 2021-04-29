@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<title>Click_map</title>
+		<link rel="icon" href="img/taxi.png" type="image / icon type" />
+		<!--Lealflet-->
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+			integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+			crossorigin=""
+		/>
+		<script
+			src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+			integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+			crossorigin=""
+		></script>
+
+		<!--Ajax-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!--Styles-->
+		<link rel="stylesheet" href="/css/Estilos.css" />
+		<!--Animated-->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+		/>
+		<!--ip-->
+		<script type="text/javascript" src="../ip.js"></script>
+	</head>
+
+	<body>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<label for="name">Introduzca radio(0 a 3 km): </label>
+		<input
+			name="searchTxt"
+			type="text"
+			maxlength="512"
+			id="radius"
+			class="searchField"
+			size="5"
+			value="0.5"
+		/>
+		<h2 style="font-size: 15px">
+			Hacer doble click en un un lugar del mapa para consultar.
+		</h2>
+
+		<!--Mapa leaflet-->
+		<div id="mapid2"></div>
+	</body>
+</html>
+
+<script>
+	//Inicializar mapa lealflet
+	const mymap = L.map("mapid2").setView([10.9861045, -74.80928094], 12);
+	mymap.doubleClickZoom.disable();
+
+	const attribution =
+		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+	const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+	const tiles = L.tileLayer(tileUrl, {attribution});
+	tiles.addTo(mymap);
+
+	//Consulta
+
+	customIcon = new L.Icon({
+		iconUrl: "/img/circle.png",
+		iconSize: [6, 6]
+	});
+	customIcon2 = new L.Icon({
+		iconUrl: "/img/circlea.png",
+		iconSize: [6, 6]
+	});
+
+	mymap.on("dblclick", async function (e) {
+		let distance = document.getElementById("radius").value;
+		if (distance > 3 || distance < 0) {
+			alert("Valor introducido fuera del rango");
+		} else {
+			try {
+				console.log(distance);
+				var coord = e.latlng.toString().split(",");
+				var lat = coord[0].split("(");
+				var lng = coord[1].split(")");
+				response = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};1`);
+				const data_round_location = await response.json();
+				response2 = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};2`);
+				const data_round_location2 = await response2.json();
+				if (data_round_location[0] == undefined) {
+					alert("El rango escogido no contiene datos");
+				} else {
+					L.circle([lat[1], lng[0]], {radius: distance * 1000, color: "black"}).addTo(
+						mymap
+					);
+				}
+
+				for (i = 0; i < data_round_location.length; i++) {
+					if (data_round_location[i].distance < distance * 0.621371) {
+						L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
+							icon: customIcon
+						})
+							.bindPopup("<b>Taxi#1: </b>" + data_round_location[i].Time, {
+								closeOnClick: false,
+								autoClose: false,
+								autoPan: false
+							})
+							.addTo(mymap);
+					}
+				}
+				for (i = 0; i < data_round_location2.length; i++) {
+					if (data_round_location2[i].distance < distance * 0.621371) {
+						L.marker(
+							[data_round_location2[i].Latitud, data_round_location2[i].Longitud],
+							{
+								icon: customIcon2
+							}
+						)
+							.bindPopup("<b>Taxi#2:</b> " + data_round_location2[i].Time, {
+								closeOnClick: false,
+								autoClose: false,
+								autoPan: false
+							})
+							.addTo(mymap);
+					}
+				}
+
+				console.log(
+					"You clicked the map at latitude: " + lat[1] + " and longitude:" + lng[0]
+				);
+			} catch {
+				alert("Valor introducido no valido");
+			}
+		}
+	});
+</script>
