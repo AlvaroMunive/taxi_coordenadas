@@ -36,47 +36,79 @@
 	</head>
 
 	<body>
-		<div id="container">
-			<!--Logo central-->
-			<!--El tio taxi + logo-->
-			<header id="gorro2">
-				<h1 class="animate__animated animate__fadeIn">
-					El Tio Taxis
-					<img src="/img/taxipeq.png" />
-				</h1>
-			</header>
-			<!--Calendarios-->
-			<label for="start">Fecha Inicial:</label>
-			<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
-			<br />
-			<label for="end">Fecha Final: </label>
-			<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
-			<br />
-			<!--Taxis-->
-			<div class="content-select">
-				<label for="content-select">Seleccione Taxi:</label>
-				<select name="taxi" id="taxi_id">
-					<option value="1">Ninguno</option>
-					<option value="2">Taxi#1</option>
-					<option value="3">Taxi#2</option>
-					<option value="4">Ambos</option>
-				</select>
-				<i></i>
-			</div>
+		<!-- incializar el pop up-->
+		<div class= "container-all" id="modal">
 
-			<!--Botones-->
-			<div>
-				<a class="index" href="/">Volver a pagina de inicio</a>
-			</div>
-			<div>
-				<a class="index" href="/ubicar/click_map" target="_blank"
-					>Consulta por posiciones especificas</a
-				>
-			</div>
-			<!--Mapa-->
-			<div id="mapid"></div>
-			<footer>El Tío Taxi &copy; 2021</footer>
+			<div class="popup">
+				<header id="head2">
+					<label for="name" >Introduzca radio(0 a 3 km): </label>
+					<input
+					name="searchTxt"
+					type="text"
+					maxlength="512"
+					id="radius"
+					class="searchField"
+					size="5"
+					value="0.5"
+							/>
+					<h2 style="font-size: 15px">
+					Hacer doble click en un un lugar del mapa para consultar.
+					</h2>
+					
+				</header>
+				<div id="mapid2"></div>	
+				
+			   
+
+			   <!--Mapa leaflet-->
+   
+			
+			   
+			   <a href="#" class="btn-close-popup"> X </a>
+			   </div>
+		   
+		   </div>
+	   		
 		</div>
+	</div>
+	<!--Logo central-->
+	<!--El tio taxi + logo-->
+	<header id="gorro2">
+		<h1 class="animate__animated animate__fadeIn">
+			El Tio Taxis
+			<img src="/img/taxipeq.png" />
+		</h1>
+	</header>
+	<!--Calendarios-->
+	<label for="start">Fecha Inicial:</label>
+	<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
+	<br />
+	<label for="end">Fecha Final: </label>
+	<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
+	<br />
+	<!--Taxis-->
+	<div class="content-select">
+		<label for="content-select">Seleccione Taxi:</label>
+		<select name="taxi" id="taxi_id">
+			<option value="1">Ninguno</option>
+			<option value="2">Taxi#1</option>
+			<option value="3">Taxi#2</option>
+			<option value="4">Ambos</option>
+		</select>
+		<i></i>
+	</div>
+
+	<!--Botones-->
+	<div>
+		<a class="index" href="/">Volver a pagina de inicio</a>
+	</div>
+	<div>
+	<a class="index" href="#modal" >Consulta por posiciones especificas</a>
+	
+	
+	<!--Mapa-->
+	<div id="mapid"></div>
+	<footer>El Tío Taxi &copy; 2021</footer>
 	</body>
 
 	<script>
@@ -283,5 +315,92 @@
 				polyline2.setLatLngs([latlon]);
 			}
 		});
+		//---------------------------------------------------------------------
+		//Inicializar mapa 2 lealflet para consulta por radio
+		const mymap2 = L.map("mapid2").setView([10.9861045, -74.80928094], 12);
+		mymap2.doubleClickZoom.disable();
+	
+		const attribution2 =
+			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+		const tileUrl2 = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+		const tiles2 = L.tileLayer(tileUrl2, {attribution2});
+		tiles2.addTo(mymap2);
+	
+		//Consulta
+	
+		customIcon = new L.Icon({
+			iconUrl: "/img/circle.png",
+			iconSize: [6, 6]
+		});
+		customIcon2 = new L.Icon({
+			iconUrl: "/img/circlea.png",
+			iconSize: [6, 6]
+		});
+	
+		mymap2.on("dblclick", async function (e) {
+			let distance = document.getElementById("radius").value;
+			if (distance > 3 || distance < 0) {
+				alert("Valor introducido fuera del rango");
+			} else {
+				try {
+					console.log(distance);
+					var coord = e.latlng.toString().split(",");
+					var lat = coord[0].split("(");
+					var lng = coord[1].split(")");
+					response = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};1`);
+					const data_round_location = await response.json();
+					response2 = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};2`);
+					const data_round_location2 = await response2.json();
+					if (data_round_location[0] == undefined) {
+						alert("El rango escogido no contiene datos");
+					} else {
+						L.circle([lat[1], lng[0]], {radius: distance * 1000, color: "black"}).addTo(
+							mymap2
+						);
+					}
+	
+					for (i = 0; i < data_round_location.length; i++) {
+						if (data_round_location[i].distance < distance * 0.621371) {
+							L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
+								icon: customIcon
+							})
+								.bindPopup("<b>Taxi#1: </b>" + data_round_location[i].Time, {
+									closeOnClick: false,
+									autoClose: false,
+									autoPan: false
+								})
+								.addTo(mymap2);
+						}
+					}
+					for (i = 0; i < data_round_location2.length; i++) {
+						if (data_round_location2[i].distance < distance * 0.621371) {
+							L.marker(
+								[data_round_location2[i].Latitud, data_round_location2[i].Longitud],
+								{
+									icon: customIcon2
+								}
+							)
+								.bindPopup("<b>Taxi#2:</b> " + data_round_location2[i].Time, {
+									closeOnClick: false,
+									autoClose: false,
+									autoPan: false
+								})
+								.addTo(mymap2);
+						}
+					}
+	
+					console.log(
+						"You clicked the map at latitude: " + lat[1] + " and longitude:" + lng[0]
+					);
+				} catch {
+					alert("Valor introducido no valido");
+				}
+			}
+		});
 	</script>
+	
+	<script>
+		
+	</script>
+	
 </html>
