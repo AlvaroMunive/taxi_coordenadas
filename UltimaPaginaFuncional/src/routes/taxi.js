@@ -69,6 +69,46 @@ router.get("/api/polyline/:id", (req, res) => {
 
 });
 
+router.get("/api/polyline/map/:id", (req, res) => {
+  var { id } = req.params;
+  id = id.split(";")
+
+  if (id[2] == 1) {
+    client.query(
+      `SELECT id,"Latitud","Longitud","Time", ( 3959 * acos( cos( radians(${id[0]}) ) * cos( radians( "Latitud" ) ) 
+      * cos( radians("Longitud") - radians(${id[1]}) ) + sin( radians(${id[0]}) ) * sin(radians("Latitud")) ) ) AS distance 
+      FROM public.taxi_coordenadas
+      ORDER BY distance`,
+      (err, rows, fields) => {
+        if (!err) {
+          res.json(rows.rows);
+        } else {
+          console.log(err);
+        }
+      }
+    );
+  } else {
+    client.query(
+      `SELECT id,"Latitud","Longitud","Time", ( 3959 * acos( cos( radians(${id[0]}) ) * cos( radians( "Latitud" ) ) 
+      * cos( radians("Longitud") - radians(${id[1]}) ) + sin( radians(${id[0]}) ) * sin(radians("Latitud")) ) ) AS distance 
+      FROM public.taxi_coordenadas2
+      ORDER BY distance`,
+      (err, rows, fields) => {
+        if (!err) {
+          res.json(rows.rows);
+        } else {
+          console.log(err);
+        }
+      }
+    );
+
+  }
+
+
+
+
+});
+
 
 //Exportar rutas
 module.exports = router;
