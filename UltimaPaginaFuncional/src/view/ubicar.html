@@ -179,7 +179,7 @@
 			}
 			if ($("#taxi_id").val() == "2") {
 				//Fetch a la api con los rangos de los calendarios
-				const response1 = await fetch(`http:/13.58.194.15/${ip}/api/polyline/${start};${end};1`, {
+				const response1 = await fetch(`http://${ip}/api/polyline/${start};${end};1`, {
 					mode: "cors",
 					headers: {
 						"Access-Control-Allow-Headers": "Content-Type",
@@ -194,7 +194,7 @@
 				polyline2.remove();
 			}
 			if ($("#taxi_id").val() == "3") {
-				const response2 = await fetch(`http:/13.58.194.15/${ip}/api/polyline/${start};${end};2`, {
+				const response2 = await fetch(`http://${ip}/api/polyline/${start};${end};2`, {
 					mode: "cors",
 					headers: {
 						"Access-Control-Allow-Headers": "Content-Type",
@@ -209,7 +209,7 @@
 				polyline1.remove();
 			}
 			if ($("#taxi_id").val() == "4") {
-				const response1 = await fetch(`http:/13.58.194.15/${ip}/api/polyline/${start};${end};1`, {
+				const response1 = await fetch(`http://${ip}/api/polyline/${start};${end};1`, {
 					mode: "cors",
 					headers: {
 						"Access-Control-Allow-Headers": "Content-Type",
@@ -217,7 +217,7 @@
 						"Access-Control-Allow-Methods": "OPTIONS,POST,GET"
 					}
 				});
-				const response2 = await fetch(`http:/13.58.194.15/${ip}/api/polyline/${start};${end};2`, {
+				const response2 = await fetch(`http://${ip}/api/polyline/${start};${end};2`, {
 					mode: "cors",
 					headers: {
 						"Access-Control-Allow-Headers": "Content-Type",
@@ -347,9 +347,9 @@
 					var coord = e.latlng.toString().split(",");
 					var lat = coord[0].split("(");
 					var lng = coord[1].split(")");
-					response = await fetch(`http:/13.58.194.15/${ip}/api/polyline/map/${lat[1]};${lng[0]};1`);
+					response = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};1`);
 					const data_round_location = await response.json();
-					response2 = await fetch(`http:/13.58.194.15/${ip}/api/polyline/map/${lat[1]};${lng[0]};2`);
+					response2 = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};2`);
 					const data_round_location2 = await response2.json();
 					if (data_round_location[0] == undefined) {
 						alert("El rango escogido no contiene datos");

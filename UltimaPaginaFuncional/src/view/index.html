@@ -107,7 +107,7 @@
 
 	async function Taxi() {
 		//Fetch para obtener el ultimo dato de la base de datos
-		var response = await fetch(`http:/13.58.194.15/${ip}/api/1`, {
+		var response = await fetch(`http://${ip}/api/1`, {
 			mode: "cors",
 			headers: {
 				"Access-Control-Allow-Headers": "Content-Type",
@@ -119,7 +119,7 @@
 		var data = await response.json();
 		const rows1 = data;
 
-		response = await fetch(`http:/13.58.194.15/${ip}/api/2`, {
+		response = await fetch(`http://${ip}/api/2`, {
 			mode: "cors",
 			headers: {
 				"Access-Control-Allow-Headers": "Content-Type",

@@ -1,1 +1,1 @@
-var ip = "localhost"
+var ip = "13.58.194.15"
