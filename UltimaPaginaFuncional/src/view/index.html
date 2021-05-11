@@ -33,22 +33,30 @@
 		/>
 		<!--ip-->
 		<script type="text/javascript" src="ip.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 
 	<body>
+		
+		
+		
 		<div id="container">
-			<!--Logo central-->
-			<header ide="gorro2">
-				<!--El tio taxi + Logo-->
-				<h1 class="animate__animated animate__fadeIn">
-					El Tio Taxis
-					<img src="/img/taxipeq.png" />
-				</h1>
-			</header>
+			
+			<div class="head">		
+				<div class="wrap">
+					<div class="logo">
+						<img src="/img/logo.png">
+						EL TIO TAXIS
+					</div>
+					<div class="navbar">
+						<a class="active" href="ubicar"><i class="fa fa-fw fa-search"></i> Solicitar Historial</a>
+						<a class="active" onclick= location.reload()><i class="fa fa-fw fa-home"></i> Home</a>
+						
+					</div>
+				</div>
+			</div>
+			
 
-			<!--Boton solicitar historial-->
-			<a class="historial" href="ubicar">Solicitar Historial</a>
-			<br />
 			<!--Tabla-->
 			<table class="tabla">
 				<thead>

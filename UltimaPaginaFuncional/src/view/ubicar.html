@@ -23,7 +23,7 @@
 		></script>
 		<!--Ajax-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="/css/Estilos.css" />
+		<link rel="stylesheet" href="/css/Estilos2.css" />
 		<!--Animated-->
 		<link
 			rel="stylesheet"
@@ -33,6 +33,7 @@
 		<script src="bundle.js"></script>
 		<!--ip-->
 		<script type="text/javascript" src="ip.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 
 	<body>
@@ -64,7 +65,7 @@
 					
 				</header>
 				<div id="mapid2"></div>	
-				<footer>El Tío Taxi &copy; 2021</footer>
+				
 			   
 
 			   <!--Mapa leaflet-->
@@ -80,42 +81,50 @@
 	</div>
 	<!--Logo central-->
 	<!--El tio taxi + logo-->
-	<header id="gorro2">
-		<h1 class="animate__animated animate__fadeIn">
-			El Tio Taxis
-			<img src="/img/taxipeq.png" />
-		</h1>
-	</header>
-	<!--Calendarios-->
-	<label for="start">Fecha Inicial:</label>
-	<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
-	<br />
-	<label for="end">Fecha Final: </label>
-	<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
-	<br />
-	<!--Taxis-->
-	<div class="content-select">
-		<label for="content-select">Seleccione Taxi:</label>
-		<select name="taxi" id="taxi_id">
-			<option value="1">Ninguno</option>
-			<option value="2">Taxi#1</option>
-			<option value="3">Taxi#2</option>
-			<option value="4">Ambos</option>
-		</select>
-		<i></i>
+<div>	
+	<div class="head">		
+		<div class="wrap">
+			<div class="logo">
+				<img src="/img/logo.png">
+				EL TIO TAXIS
+			</div>
+			<div class="navbar">
+				<a id="consultR" href="#modal"><i class="fa fa-fw fa-search"></i> Consulta Radial</a>
+				<a  href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+				
+			</div>
+		</div>
 	</div>
-
+		<!--Calendarios-->
+	<div class="calendarios">
+		<label for="start">Fecha Inicial:</label>
+		<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
+		<br />
+		<label for="end">Fecha Final: </label>
+		<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
+		<br />
+		<!--Taxis-->
+		<div class="content-select">
+			<label for="content-select">Seleccione Taxi:</label>
+			<select name="taxi" id="taxi_id">
+				<option value="1">Ninguno</option>
+				<option value="2">Taxi#1</option>
+				<option value="3">Taxi#2</option>
+				<option value="4">Ambos</option>
+			</select>
+			<i></i>
+		</div>
+	</div>
 	<!--Botones-->
 	<div>
-		<a class="index" href="/">Volver a pagina de inicio</a>
-	</div>
-	<div>
-	<a id= "consultR" class="index" href="#modal" >Consulta por posiciones especificas</a>
+	
 	
 	
 	<!--Mapa-->
-	<div id="mapid"></div>
-	<footer>El Tío Taxi &copy; 2021</footer>
+	<div id="mapid3"></div>
+	<footer id="footer2">El Tío Taxi &copy; 2021</footer>
+</div>
+</div>	
 	</body>
 
 	<script>
@@ -148,7 +157,7 @@
 		});
 
 		//Inicializar mapa lealflet
-		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 12);
+		const mymap = L.map("mapid3").setView([10.9861045, -74.80928094], 12);
 		customIcon = new L.Icon({
 			iconUrl: "/img/circle.png",
 			iconSize: [6, 6]
@@ -412,6 +421,7 @@
 	
 		circulo.on( 'mouseup' , async function(e){
 			a = e.latlng;
+			circulo.setLatLng(e.latlng);
 			coord = e.latlng.toString().split(",");
 		    lat = coord[0].split("(");
 			lng = coord[1].split(")");
