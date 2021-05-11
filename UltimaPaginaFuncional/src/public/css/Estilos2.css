@@ -36,7 +36,7 @@ footer {
 	line-height: 100%;
 	font-size: 18px;
 	position: relative;
-	top:90px;
+	top:110px;
 }
 
 
@@ -57,7 +57,7 @@ footer {
 	box-sizing: border-box;
 	z-index: 0;
 	position: relative;
-	top:90px;
+	top:110px;
 }
 
 label {
@@ -65,7 +65,7 @@ label {
 	line-height: 110%;
 }
 #start {
-	background-color: #ffee00;
+	background-color: #fcee2e;
 	color: black;
 	border-color: black;
 	border-radius: 5px;
@@ -80,7 +80,7 @@ label {
 }
 
 #end {
-	background-color: #ffee00;
+	background-color: #fcee2e;
 	color: black;
 	border-color: black;
 	border-radius: 5px;
@@ -93,63 +93,6 @@ label {
 
 #end:hover {
 	cursor: pointer;
-}
-
-@media screen and (max-width: 399px) and (min-width: 300px) {
-	
-	.tabla thead {
-		display: none;
-	}
-	.tabla,
-	.tabla tbody,
-	.tabla tr,
-	.tabla td {
-		display: block;
-		width: 100%;
-		z-index: -1;
-	}
-	.tabla tr {
-		margin-bottom: 15px;
-	}
-	.tabla td {
-		text-align: left;
-		padding-left: 50%;
-		text-align: left;
-		position: relative;
-	}
-	.tabla td::before {
-		content: attr(data-label);
-		position: absolute;
-		left: 0;
-		width: 50%;
-		padding-left: 15px;
-		font-size: 15px;
-		font-weight: bold;
-		text-align: left;
-	}
-}
-@media (max-width: 299px) {
-	.tabla thead {
-		display: none;
-	}
-	.tabla,
-	.tabla tbody,
-	.tabla tr,
-	.tabla td {
-		display: block;
-		width: 100%;
-		z-index: -1;
-	}
-	.tabla tr {
-		margin-top: 35px;
-		margin-bottom: 15px;
-	}
-	.tabla td {
-		text-align: left;
-		padding-left: 0%;
-		text-align: center;
-		position: relative;
-	}
 }
 
 .content-select select {
@@ -360,12 +303,13 @@ label {
 }
 .calendarios{
 	position: relative;
-	top:85px;
+	top:100px;
 	z-index: 0	;
 }
-@media only screen and (min-width:565px) and (max-width:813px) {
+ 
+@media only screen and (min-width:437px) and (max-width:813px) {
 	.head{
-		height:60px 
+		height:70px 
 	}
 	.logo{
 		font-size: 30px;
@@ -375,54 +319,53 @@ label {
 		transform:translateX(-3%);
 	}
 }
-@media only screen and (min-width:348px) and (max-width:564px) {
-	.head{
-		height:60px 
-	}
-	.logo{
-		font-size: 25px;
-		transform:translateY(-6%);
-	}
-	.navbar{
-		margin: top -20px;
-		transform:translateY(-10%);
-	}
-	.navbar a{
-		font-size:12px;
-		display: block;
-	}
+@media only screen and (min-width:348px) and (max-width:436px) {
+   .head{
+	   height:70px 
+   }
+   .logo{
+	   font-size: 30px;
+   }
+   .navbar{
+	   margin: top -20px;
+	   transform:translateX(-3%);
+   }
+   .navbar a{
+	   font-size:12px;
+	   display: block;
+   }
 }
 @media only screen and (min-width:300px) and (max-width:347px) {
-	.head{
-		height:60px 
-	}
-	.logo{
-		font-size: 20px;
-	}
-	.navbar{
-		margin: top -20px;
-		transform:translateX(-3%);
-		transform:translateY(-3%);
-	}
-	.navbar a{
-		font-size:9px;
-		display: block;
-	}
+   .head{
+	   height:70px 
+   }
+   .logo{
+	   font-size: 25px;
+   }
+   .navbar{
+	   margin: top -20px;
+	   transform:translateX(-3%);
+   }
+   .navbar a{
+	   font-size:9px;
+	   display: block;
+   }
 }
- @media (max-width: 299px) {
-	.head{
-		height:70px 
-	}
-	.logo{
-		font-size: 20px;
-	}
-	.navbar{
-		margin: top -20px;
-		transform:translateX(-3%);
-		
-	}
-	.navbar a{
-		font-size:9px;
-		display: block;
-	}
+@media (max-width: 299px) {
+   .head{
+	   height:70px 
+   }
+   .logo{
+	   font-size: 20px;
+   }
+   .navbar{
+	   margin: top -20px;
+	   transform:translateX(-3%);
+	   
+   }
+   .navbar a{
+	   font-size:12px;
+	   display: block;
+   }
 }
+ 
