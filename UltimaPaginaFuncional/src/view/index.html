@@ -33,29 +33,30 @@
 		/>
 		<!--ip-->
 		<script type="text/javascript" src="ip.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
 	</head>
 
 	<body>
-		
-		
-		
 		<div id="container">
-			
-			<div class="head">		
+			<div class="head">
 				<div class="wrap">
 					<div class="logo">
-						<img src="/img/logo.png">
+						<img src="/img/logo.png" />
 						EL TIO TAXIS
 					</div>
 					<div class="navbar">
-						<a class="active" href="ubicar"><i class="fa fa-fw fa-search"></i> Solicitar Historial</a>
-						<a class="active" onclick= location.reload()><i class="fa fa-fw fa-home"></i> Home</a>
-						
+						<a class="active" href="ubicar"
+							><i class="fa fa-fw fa-search"></i> Solicitar Historial</a
+						>
+						<a class="active" onclick="location.reload()"
+							><i class="fa fa-fw fa-home"></i> Home</a
+						>
 					</div>
 				</div>
 			</div>
-			
 
 			<!--Tabla-->
 			<table class="tabla">
@@ -79,7 +80,7 @@
 						<td data-label="Latitud"><span id="lat2"></span></td>
 						<td data-label="Longitud"><span id="long2"></span></td>
 						<td data-label="Tiempo"><span id="tim2"></span></td>
-						<td data-label="% Gasolina"><span id="gas"></span></td>
+						<td data-label="% Gasolina"><span id="gas2"></span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -194,11 +195,13 @@
 		document.getElementById("lat").textContent = rows1[0].Latitud;
 		document.getElementById("long").textContent = rows1[0].Longitud;
 		document.getElementById("tim").textContent = rows1[0].Time;
+		document.getElementById("gas").textContent = rows1[0].Gasoline;
 
 		document.getElementById("id2").textContent = "2";
 		document.getElementById("lat2").textContent = rows2[0].Latitud;
 		document.getElementById("long2").textContent = rows2[0].Longitud;
 		document.getElementById("tim2").textContent = rows2[0].Time;
+		document.getElementById("gas2").textContent = rows2[0].Gasoline;
 	}
 	//Actualizar cada 3s
 	setInterval("Taxi()", 3000);
