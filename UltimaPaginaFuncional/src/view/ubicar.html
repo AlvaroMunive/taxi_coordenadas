@@ -23,7 +23,7 @@
 		></script>
 		<!--Ajax-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="/css/Estilos.css" />
+		<link rel="stylesheet" href="/css/Estilos2.css" />
 		<!--Animated-->
 		<link
 			rel="stylesheet"
@@ -33,6 +33,7 @@
 		<script src="bundle.js"></script>
 		<!--ip-->
 		<script type="text/javascript" src="ip.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 
 	<body>
@@ -41,18 +42,25 @@
 
 			<div class="popup">
 				<header id="head2">
-					<label for="name" >Introduzca radio(0 a 3 km): </label>
+					<label for="name" >Deslice radio entre (0 a 5 km): </label>
 					<input
 					name="searchTxt"
-					type="text"
+					min="0"
+					max="5"
+					step="0.5"
+					type="range"
 					maxlength="512"
 					id="radius"
-					class="searchField"
-					size="5"
-					value="0.5"
-							/>
+					class="slider"
+					value="1"				
+					
+					oninput = "document.getElementById ('out').value = value"
+
+					
+					/>
+					<output id = "out" for= "name">1</output>
 					<h2 style="font-size: 15px">
-					Hacer doble click en un un lugar del mapa para consultar.
+						Arrastre el marcador a un lugar del mapa para consultar.
 					</h2>
 					
 				</header>
@@ -64,7 +72,7 @@
    
 			
 			   
-			   <a href="#" class="btn-close-popup"> X </a>
+			   <a id = "cerrarradio" href="#" class="btn-close-popup"> X </a>
 			   </div>
 		   
 		   </div>
@@ -73,42 +81,50 @@
 	</div>
 	<!--Logo central-->
 	<!--El tio taxi + logo-->
-	<header id="gorro2">
-		<h1 class="animate__animated animate__fadeIn">
-			El Tio Taxis
-			<img src="/img/taxipeq.png" />
-		</h1>
-	</header>
-	<!--Calendarios-->
-	<label for="start">Fecha Inicial:</label>
-	<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
-	<br />
-	<label for="end">Fecha Final: </label>
-	<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
-	<br />
-	<!--Taxis-->
-	<div class="content-select">
-		<label for="content-select">Seleccione Taxi:</label>
-		<select name="taxi" id="taxi_id">
-			<option value="1">Ninguno</option>
-			<option value="2">Taxi#1</option>
-			<option value="3">Taxi#2</option>
-			<option value="4">Ambos</option>
-		</select>
-		<i></i>
+<div>	
+	<div class="head">		
+		<div class="wrap">
+			<div class="logo">
+				<img src="/img/logo.png">
+				EL TIO TAXIS
+			</div>
+			<div class="navbar">
+				<a id="consultR" href="#modal"><i class="fa fa-fw fa-search"></i> Consulta Radial</a>
+				<a  href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+				
+			</div>
+		</div>
 	</div>
-
+		<!--Calendarios-->
+	<div class="calendarios">
+		<label for="start">Fecha Inicial:</label>
+		<input type="datetime-local" id="start" name="trip-end" onkeydown="return false" />
+		<br />
+		<label for="end">Fecha Final: </label>
+		<input type="datetime-local" id="end" name="trip-end" onkeydown="return false" />
+		<br />
+		<!--Taxis-->
+		<div class="content-select">
+			<label for="content-select">Seleccione Taxi:</label>
+			<select name="taxi" id="taxi_id">
+				<option value="1">Ninguno</option>
+				<option value="2">Taxi#1</option>
+				<option value="3">Taxi#2</option>
+				<option value="4">Ambos</option>
+			</select>
+			<i></i>
+		</div>
+	</div>
 	<!--Botones-->
 	<div>
-		<a class="index" href="/">Volver a pagina de inicio</a>
-	</div>
-	<div>
-	<a class="index" href="#modal" >Consulta por posiciones especificas</a>
+	
 	
 	
 	<!--Mapa-->
-	<div id="mapid"></div>
-	<footer>El Tío Taxi &copy; 2021</footer>
+	<div id="mapid3"></div>
+	<footer id="footer2">El Tío Taxi &copy; 2021</footer>
+</div>
+</div>	
 	</body>
 
 	<script>
@@ -141,7 +157,7 @@
 		});
 
 		//Inicializar mapa lealflet
-		const mymap = L.map("mapid").setView([10.9861045, -74.80928094], 12);
+		const mymap = L.map("mapid3").setView([10.9861045, -74.80928094], 12);
 		customIcon = new L.Icon({
 			iconUrl: "/img/circle.png",
 			iconSize: [6, 6]
@@ -336,29 +352,97 @@
 			iconUrl: "/img/circlea.png",
 			iconSize: [6, 6]
 		});
+		//----------------------------------------------------------------		
+		let coord;
+		let lat=[];
+		let lng=[];
+		let a;
+		lat[1]= 10.9861045;
+		lng[0] = -74.80928094;
+		console.log("esta es lat1",lat[1]);
+		consultaR(a);
+		let circulo = L.circle([10.9861045, -74.80928094],{radius: 1000, color: "black"}).addTo(mymap2);	
+		var slider = document.getElementById("radius")*1000;
+		var output = document.getElementById("out")*1000;
+		output.innerHTML = slider.value;
+		slider.oninput = function() {
+ 	 	output.innerHTML = this.value;
+  		circulo.setRadius(this.value); // Sets the radius of the circle to be the value of the slider
+		}
+		$('#radius').on('input', function(event) {
+  		output.innerHTML = event.target.value*1000;
+  		circulo.setRadius(event.target.value*1000);
+		$(".leaflet-marker-icon").remove();
+	    $(".leaflet-popup").remove();
+		
+	 	});	
+		 $('#radius').on('change', function(event) {
+  		consultaR(a);
+	 	});	
+		 $('#cerrarradio').on('click', function(event) {
+			$(".leaflet-marker-icon").remove();
+	    	$(".leaflet-popup").remove();
+			lat[1]= 10.9861045;
+			lng[0] = -74.80928094;
+			circulo.setLatLng([10.9861045, -74.80928094]);
+			document.getElementById("radius").value ="1"
+			document.getElementById("out").value ="1"
+			circulo.setRadius(1000);
+			mymap2.setView([10.9861045, -74.80928094], 12);
+	 	});	
+		 $('#consultR').on('click', function(event) {
+  		consultaR(a);
+	 	});	
+		
+		
+		
+		//----------------------------------------------------------
+					
+
+					circulo.on({ mousedown:  function (){
+                    mymap2.on('mousemove', async function (e) {
+				    mymap2.dragging.disable();
+              	    circulo.setLatLng(e.latlng);
+					a = e.latlng;				
+					
+				    $(".leaflet-marker-icon").remove();
+				    $(".leaflet-popup").remove();
+            		});
+         	 		}
+      	 			}); 
+       				mymap2.on('mouseup', function(e){
+					mymap2.dragging.enable();
+        			mymap2.removeEventListener('mousemove');
+					
+		})
+
+		//--------------------------------------------------------------
+		
 	
-		mymap2.on("dblclick", async function (e) {
-			let distance = document.getElementById("radius").value;
-			if (distance > 3 || distance < 0) {
-				alert("Valor introducido fuera del rango");
-			} else {
-				try {
-					console.log(distance);
-					var coord = e.latlng.toString().split(",");
-					var lat = coord[0].split("(");
-					var lng = coord[1].split(")");
+		circulo.on( 'mouseup' , async function(e){
+			a = e.latlng;
+			circulo.setLatLng(e.latlng);
+			coord = e.latlng.toString().split(",");
+		    lat = coord[0].split("(");
+			lng = coord[1].split(")");
+			console.log("este es lat", lat)
+			consultaR(a);
+			}); 
+
+		async function consultaR(a){
+			var distance = document.getElementById("radius").value;
+			
+				
+					//circulo.setLatLng(a);
+					$(".leaflet-marker-icon").remove();
+	    			$(".leaflet-popup").remove();
+					
 					response = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};1`);
 					const data_round_location = await response.json();
 					response2 = await fetch(`http://${ip}/api/polyline/map/${lat[1]};${lng[0]};2`);
 					const data_round_location2 = await response2.json();
-					if (data_round_location[0] == undefined) {
-						alert("El rango escogido no contiene datos");
-					} else {
-						L.circle([lat[1], lng[0]], {radius: distance * 1000, color: "black"}).addTo(
-							mymap2
-						);
-					}
-	
+									
+					
 					for (i = 0; i < data_round_location.length; i++) {
 						if (data_round_location[i].distance < distance * 0.621371) {
 							L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
@@ -366,7 +450,7 @@
 							})
 								.bindPopup("<b>Taxi#1: </b>" + data_round_location[i].Time, {
 									closeOnClick: false,
-									autoClose: false,
+									autoClose: true,
 									autoPan: false
 								})
 								.addTo(mymap2);
@@ -382,21 +466,19 @@
 							)
 								.bindPopup("<b>Taxi#2:</b> " + data_round_location2[i].Time, {
 									closeOnClick: false,
-									autoClose: false,
+									autoClose: true,
 									autoPan: false
 								})
 								.addTo(mymap2);
 						}
 					}
-	
 					console.log(
 						"You clicked the map at latitude: " + lat[1] + " and longitude:" + lng[0]
 					);
-				} catch {
-					alert("Valor introducido no valido");
-				}
-			}
-		});
+				
+		}	
+
+		
 	</script>
 	
 	<script>

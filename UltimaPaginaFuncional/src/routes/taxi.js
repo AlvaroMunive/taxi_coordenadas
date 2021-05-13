@@ -10,7 +10,7 @@ router.get("/api/:id", (req, res) => {
 
   if (id == "1") {
     //Obtener el ultimo dato de la base de datos
-    client.query(`SELECT "Latitud", "Longitud", "Time" FROM public.taxi_coordenadas ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
+    client.query(`SELECT "Latitud", "Longitud", "Time", "Gasoline" FROM public.taxi_coordenadas ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
       if (!err) {
         res.json(row.rows);
       } else {
@@ -21,7 +21,7 @@ router.get("/api/:id", (req, res) => {
 
   } else if (id == "2") {
     //Obtener el ultimo dato de la base de datos
-    client.query(`SELECT "Latitud", "Longitud", "Time" FROM public.taxi_coordenadas2 ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
+    client.query(`SELECT "Latitud", "Longitud", "Time", "Gasoline" FROM public.taxi_coordenadas2 ORDER BY id DESC LIMIT 1;`, (err, row, field) => {
       if (!err) {
         res.json(row.rows);
       } else {
