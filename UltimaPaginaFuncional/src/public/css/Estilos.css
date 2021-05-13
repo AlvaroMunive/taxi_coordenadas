@@ -58,7 +58,7 @@ footer {
 		font-size: 20px;
 		font-style: bold;
 		background-color: #ffffff;
-		background-image:url(/src/public/img/taxipeq.png);
+		
 	
 		background-repeat: no-repeat;
 		width: auto;
@@ -133,12 +133,6 @@ footer {
 	}
 }
 
-.img{
-    width: 40%;
-    background-image: url(/src/public/img/taxipeq.png);
-    background-size: cover;
-    background-position: center;
-}
 
   /* Style the navigation bar */
 .navbar {
