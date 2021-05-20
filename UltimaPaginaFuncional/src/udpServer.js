@@ -5,7 +5,7 @@ const socket = dgram.createSocket('udp4');
 const { pool, Client } = require("pg");
 //Credenciales de acceso
 const connectionString =
-    "postgressql://AlvaroM:azereje12@basededatos.ci7ji3srm4eo.us-east-1.rds.amazonaws.com:5432/database1";
+    "";
 const client = new Client({
     connectionString: connectionString,
 });
