@@ -44,7 +44,7 @@ router.get("/api/polyline/:id", (req, res) => {
   //Obtener los datos en un rango especificador por id
   if (id[2] == "1") {
     client.query(
-      `SELECT "Latitud","Longitud","Time" FROM public.taxi_coordenadas WHERE "Time" >=\'${start}\' AND "Time" <=\'${end_}\';`,
+      `SELECT "Latitud","Longitud","Time","Gasoline" FROM public.taxi_coordenadas WHERE "Time" >=\'${start}\' AND "Time" <=\'${end_}\';`,
       (err, rows, fields) => {
         if (!err) {
           res.json(rows);
@@ -75,7 +75,7 @@ router.get("/api/polyline/map/:id", (req, res) => {
 
   if (id[2] == 1) {
     client.query(
-      `SELECT id,"Latitud","Longitud","Time", ( 3959 * acos( cos( radians(${id[0]}) ) * cos( radians( "Latitud" ) ) 
+      `SELECT id,"Latitud","Longitud","Time","Gasoline", ( 3959 * acos( cos( radians(${id[0]}) ) * cos( radians( "Latitud" ) ) 
       * cos( radians("Longitud") - radians(${id[1]}) ) + sin( radians(${id[0]}) ) * sin(radians("Latitud")) ) ) AS distance 
       FROM public.taxi_coordenadas
       ORDER BY distance`,

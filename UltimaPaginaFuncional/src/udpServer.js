@@ -5,7 +5,7 @@ const socket = dgram.createSocket('udp4');
 const { pool, Client } = require("pg");
 //Credenciales de acceso
 const connectionString =
-    "";
+    "postgressql://AlvaroM:azereje12@basededatos.ci7ji3srm4eo.us-east-1.rds.amazonaws.com:5432/database1";
 const client = new Client({
     connectionString: connectionString,
 });
@@ -30,16 +30,16 @@ socket.on('message', (msg, rinfo) => {
     console.log(msg)
     data = msg.split(",")
 
-    if (data[4] == "1") {
+    if (data[3] == "1") {
         // Insertar dato entrante a la base de datos
-        client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time", "Gasoline")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ',' + data[3] + ');', (err, res) => {
+        client.query('INSERT INTO public.taxi_coordenadas("Latitud", "Longitud", "Time", "Gasoline")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ',' + data[4] + ');', (err, res) => {
             if (err) {
                 console.log(err);
             }
         });
-    } else if (data[4] == "2") {
+    } else if (data[3] == "2") {
         // Insertar dato entrante a la base de datos
-        client.query('INSERT INTO public.taxi_coordenadas2("Latitud", "Longitud", "Time", "Gasoline")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ',' + data[3] + ');', (err, res) => {
+        client.query('INSERT INTO public.taxi_coordenadas2("Latitud", "Longitud", "Time")VALUES (' + data[1] + ',' + data[0] + ',' + data[2] + ');', (err, res) => {
             if (err) {
                 console.log(err);
             }

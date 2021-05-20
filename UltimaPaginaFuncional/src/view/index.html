@@ -52,7 +52,7 @@
 							><i class="fa fa-fw fa-search"></i> Solicitar Historial</a
 						>
 						<a class="active" onclick="location.reload()"
-							><i class="fa fa-fw fa-home"></i> Home</a
+							><i class="fa fa-fw fa-home"></i> Inicio</a
 						>
 					</div>
 				</div>
@@ -201,7 +201,7 @@
 		document.getElementById("lat2").textContent = rows2[0].Latitud;
 		document.getElementById("long2").textContent = rows2[0].Longitud;
 		document.getElementById("tim2").textContent = rows2[0].Time;
-		document.getElementById("gas2").textContent = rows2[0].Gasoline;
+		document.getElementById("gas2").textContent = "--";
 	}
 	//Actualizar cada 3s
 	setInterval("Taxi()", 3000);
