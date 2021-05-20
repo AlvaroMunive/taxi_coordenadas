@@ -90,7 +90,7 @@
 			</div>
 			<div class="navbar">
 				<a id="consultR" href="#modal"><i class="fa fa-fw fa-search"></i> Consulta Radial</a>
-				<a  href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+				<a  href="/"><i class="fa fa-fw fa-home"></i> Inicio</a>
 				
 			</div>
 		</div>
@@ -280,7 +280,12 @@
 								})
 								.openPopup([rows[0].Latitud, rows[0].Longitud]);
 						}
-						L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup(rows[i].Time);
+						if(rows[i].Gasoline==null){
+							L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup("<b>Fecha y Hora:</b> "+rows[i].Time);
+						}else{
+							L.marker(latlon[i], {icon: customIcon}).addTo(mymap).bindPopup("<br><b>Fecha y Hora:</b> "+rows[i].Time+"<br><b>Gasolina:</b> "+rows[i].Gasoline+"%");
+						}
+						
 					}
 				}
 				//Dibujar polilinea
@@ -323,7 +328,7 @@
 								})
 								.openPopup([rows[0].Latitud, rows[0].Longitud]);
 						}
-						L.marker(latlon[i], {icon: customIcon2}).addTo(mymap).bindPopup(rows[i].Time);
+						L.marker(latlon[i], {icon: customIcon2}).addTo(mymap).bindPopup("<b>Fecha y Hora:</b> "+rows[i].Time);
 					}
 				}
 				//Dibujar polilinea
@@ -445,7 +450,9 @@
 					
 					for (i = 0; i < data_round_location.length; i++) {
 						if (data_round_location[i].distance < distance * 0.621371) {
-							L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
+
+							if (data_round_location[i].Gasoline==null){
+								L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
 								icon: customIcon
 							})
 								.bindPopup("<b>Taxi#1: </b>" + data_round_location[i].Time, {
@@ -454,7 +461,21 @@
 									autoPan: false
 								})
 								.addTo(mymap2);
+						}else{
+							L.marker([data_round_location[i].Latitud, data_round_location[i].Longitud], {
+								icon: customIcon
+							})
+								.bindPopup("<b>Taxi#1: </b>" + data_round_location[i].Time+"<br><b> Gasolina:</b>"+data_round_location[i].Gasoline+"%", {
+									closeOnClick: false,
+									autoClose: true,
+									autoPan: false
+								})
+								.addTo(mymap2);
 						}
+						
+
+					}
+							
 					}
 					for (i = 0; i < data_round_location2.length; i++) {
 						if (data_round_location2[i].distance < distance * 0.621371) {
